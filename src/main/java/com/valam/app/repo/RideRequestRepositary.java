@@ -41,10 +41,21 @@ public interface RideRequestRepositary extends JpaRepository<RideRequest, Long>{
 	@Modifying
 	@Transactional
 	@Query(nativeQuery = true,value="UPDATE Ride_Request SET STS_ID = 3 WHERE ride_loc_id = :rideId")
-	void updateByRideId(@Param("rideId") long ride_id); 
+	void updateByRideLocId(@Param("rideId") long ride_id); 
+	
+	
+	
+	
+	@Modifying
+	@Transactional
+	@Query(nativeQuery = true,value="UPDATE Ride_Request SET STS_ID = 8 WHERE ride_id = :rideId")
+	void updateByRideId(@Param("rideId") long ride_id);
 	
 	@Query(nativeQuery = true, value="Select ride_loc_id,dispatcher_id,ride_id,sts_id from Ride_Request where STS_ID != 4 and dispatcher_id = IFNULL(:disId,dispatcher_id) and IFNULL(RIDE_ID,0) = IFNULL(:ride_id,0);")
-	List<RideRequest_Dto> findByDisId(@Param("disId") Long dispatcherId,@Param("ride_id") Long rideId);
+	List<RideRequest_Dto> findByDisId(@Param("disId") Long dispatcherId,@Param("ride_id") Long rideId); 
+	
+	@Query(nativeQuery = true, value="Select ride_loc_id,dispatcher_id,ride_id,sts_id from Ride_Request where STS_ID != 4  and IFNULL(RIDE_ID,0) = IFNULL(:ride_id,0);")
+	List<RideRequest_Dto> findByRideId(@Param("ride_id") Long rideId);
     
 	@Query(nativeQuery = true,value="SELECT * FROM ride_request where ride_id = :rideId and sts_id = 4")
 	RideRequest isAlreadyRequestedOrNot(@Param("rideId") Long ride_id);

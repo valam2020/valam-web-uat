@@ -27,6 +27,9 @@ public interface CarRepositary extends JpaRepository<CarDetails, Long>{
 	@Query(nativeQuery = true, value="SELECT * FROM car_details where sts_id = 13")
 	public  List<CarDetails> findByAllCarStatus();
 	
+	@Query(nativeQuery = true, value="SELECT car_id,is_driver_assigned,comfort_level,car_register_id FROM car_details where comfort_level = :comfortlevel and is_driver_assigned != false")
+	public  List<CarObject> getByComfortLevel(@Param("comfortlevel") String comfor_level);
+	
 	@Query(nativeQuery = true, value="SELECT * FROM car_details where car_register_id = :car_registerId")
 	CarDetails findByCarRegisterId(@Param("car_registerId") String registerId);
 	

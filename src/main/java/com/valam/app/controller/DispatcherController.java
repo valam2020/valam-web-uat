@@ -6,6 +6,8 @@ import javax.validation.Valid;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.valam.app.dto.AddDispatcherDto;
+import com.valam.app.dto.DeleteDispatcherDto;
 import com.valam.app.dto.DispDriverDto;
 import com.valam.app.dto.DispatcherDto;
 import com.valam.app.dto.DispatcherDto_1;
@@ -69,21 +73,30 @@ public class DispatcherController {
      */
     @ApiOperation(value = "api to add new dispatcher record ")
     @PostMapping("/add")
-    public Dispatcher addDispatcher(@RequestBody DispatcherDto dispatcherDto) {
+    public Dispatcher addDispatcher(@RequestBody AddDispatcherDto dispatcherDto) {
+    	
         return dispatcherService.saveDispatcher(dispatcherDto);
     }
 
-    @ApiOperation(value = "api to update the dispatcher record by id ")
+    /*@ApiOperation(value = "api to update the dispatcher record by id ")
     @PostMapping("/update")
-    public Dispatcher updateDisp(@RequestHeader(value="token") String token,@RequestBody DispatcherDto dispatcherDto) {
+    public Dispatcher updateDisp(@RequestHeader(value="token") String token,@RequestBody AddDispatcherDto dispatcherDto) {
     	Dispatcher dispatcher = null;
     	if(dispRepo.getByToken(token).getId() != null) {
     		dispatcher = dispatcherService.updateDispatcher(dispatcherDto);
     	}
         return dispatcher;
+    }*/
+    
+    @ApiOperation(value = "api to update the dispatcher record by id ")
+    @PostMapping("/update")
+    public Dispatcher updateDisp(@RequestBody AddDispatcherDto dispatcherDto) {
+    	Dispatcher dispatcher = null;
+    	dispatcher = dispatcherService.updateDispatcher(dispatcherDto);
+        return dispatcher;
     }
 
-    @ApiOperation(value = "api to get the dispatcher record by id ")
+    /*@ApiOperation(value = "api to get the dispatcher record by id ")
     @GetMapping("/{id}")
     public Dispatcher findById(@RequestHeader(value="token") String token,@PathVariable Long id) {
     	Dispatcher dispatcher = null;
@@ -91,28 +104,45 @@ public class DispatcherController {
     		dispatcher = dispatcherService.getDispatcherByID(id);
     	}
         return dispatcher;
+    }*/
+    
+    @ApiOperation(value = "api to get the dispatcher record by id ")
+    @GetMapping("/{id}")
+    public Dispatcher findById(@PathVariable Long id) {
+    	Dispatcher dispatcher = null;
+    	dispatcher = dispatcherService.getDispatcherByID(id);
+        return dispatcher;
     }
+    
 
-    @ApiOperation(value = "api to delete dispatcher by id")
+    /**@ApiOperation(value = "api to delete dispatcher by id")
     @PostMapping("/delete")
-    public DispatcherDto_1 deleteDisp(@RequestHeader(value="token") String token,@RequestBody DispatcherDto dispatcherDto) {
+    public DispatcherDto_1 deleteDisp(@RequestHeader(value="token") String token,@RequestBody DeleteDispatcherDto dispatcherDto) {
     	DispatcherDto_1 disdto = null;
     	if(dispRepo.getByToken(token).getId() != null) { 
     		disdto = dispatcherService.deleteDispatcher(dispatcherDto.getDispatcherId());
     	}
         return disdto;
+    }*/
+    
+    @ApiOperation(value = "api to delete dispatcher by id")
+    @PostMapping("/delete")
+    public DispatcherDto_1 deleteDisp(@RequestBody DeleteDispatcherDto dispatcherDto) {
+    	DispatcherDto_1 disdto = null;
+    	disdto = dispatcherService.deleteDispatcher(dispatcherDto.getDispatcherId());
+        return disdto;
     }
 
     @ApiOperation(value = "api to register the dispatcher")
     @PostMapping("/signup")
-    public Dispatcher register1Dispatcher(@Valid @RequestBody DispatcherDto dispatcherDto) {
+    public Dispatcher register1Dispatcher(@Valid @RequestBody AddDispatcherDto dispatcherDto) {
         if (dispRepo.existsByEmail(dispatcherDto.getEmail())) {
             throw new BadRequestException("Email address already in use.");
         }
         return dispatcherService.saveDispatcher(dispatcherDto);
     }
 
-    @SuppressWarnings("null")
+/**    @SuppressWarnings("null")
 	@ApiOperation(value = "api to verify login dispatcher")
     @PostMapping("/signin")
     public DispatcherDto login(@Valid @RequestBody DispatcherLoginDto dispatcher) {
@@ -124,7 +154,7 @@ public class DispatcherController {
          		dispatcher1.setStsId(status.getStsId());
              	dispatcher1.setMessage(status.getStatusName());
          	}
-         	
+         
         }
         LoginDispatchers logindisp = dispService.findByemail(dispatcher.getEmail());
         if(logindisp !=null && logindisp.getLogout_time() == null) {
@@ -154,7 +184,7 @@ public class DispatcherController {
                 	 dispatcher2 = null;
                       return dispatcher2;
         }
-    }
+    } */
     
     @ApiOperation(value = "api to verify login dispatcher")
     @PostMapping("/login")
@@ -188,6 +218,4 @@ public class DispatcherController {
         return dispatcherService.CheckDispatcherExists(dispatcher.getEmail());
     }
     
-  
-
 }

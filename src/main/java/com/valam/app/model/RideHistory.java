@@ -85,6 +85,11 @@ public class RideHistory implements Serializable  {
 	@Column(name="otp")
 	private String otp;
 	
+	@Column(name="message")
+	private String message;
+	
+	@Column(name="comfort_level")
+	private String comfort_level;
 	  //to map many to one relation ship with User and RideHistory
 	  
 	  @ManyToOne(fetch = FetchType.LAZY)

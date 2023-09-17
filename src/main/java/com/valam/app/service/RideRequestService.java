@@ -123,7 +123,18 @@ public class RideRequestService {
 			    rideSts.setStatusName("No Driver Available");
 			    updateDeclineStatusToDispatcherId(rideby.getDispatcherId(),rideby.getRide_id());
 			    req.setRideStatus(rideSts);	
-	     }else {
+	     }else if(rideSts.getStsId() == 25) {
+	    	 req.setDispatcher(null);
+			    req.setDriver(null);
+			    req.setRide_history(null);
+			    req.setRide_loc_id(id);
+			    rideSts.setStsId((long) (25));
+			    rideSts.setStatusName("Disptacher declined");
+			    updateDeclineStatusToDispatcherId(rideby.getDispatcherId(),rideby.getRide_id());
+			    req.setRideStatus(rideSts);	
+	     }
+	     
+	     else {
 	    	 RideRequest req12 = rideReqRepo.isAlreadyRequestedOrNot(rideby.getRide_id());
 	 		if(req12 != null && req12.getRideStatus().getStsId() == 4) {
 	 			req.setDispatcher(null);
@@ -194,7 +205,11 @@ public class RideRequestService {
 	 			        }
 	 			        rideHisRepo.save(rideHis);
 	 			        driverRepo.updateByDriverStatus(driver.getId());
-	 			        updateNotSelectedRideStatus(req.getDispatcher().getId(),req.getRide_history().getRideId());
+	 			        System.out.println("req.getRide_history().getRideId()"+req.getRide_history().getRideId());
+	 			        if(req.getRide_loc_id() != null) {
+	 			        	updateNotSelectedRideStatus(req.getRide_history().getRideId());
+	 			        }
+	 			        
 	 			        return req;
 	 				}
 	 				else {
@@ -228,21 +243,25 @@ public class RideRequestService {
 		return rideReqRepo.findAllByDispatcherId(dispatcher_id);
 	}
 	
-	public void updateNotSelectedRideStatus(Long dispatcherId,Long rideId) {
-		List<RideRequest_Dto> requests = rideReqRepo.findByDisId(dispatcherId,rideId);
+	public void updateNotSelectedRideStatus(Long rideId) {
+		List<RideRequest_Dto> requests = rideReqRepo.findByRideId(rideId);
 	    //System.out.println(requests);
+		if(requests!=null) {
 		for(RideRequest_Dto req:requests) {
+			System.out.println("req.getRide_loc_id()"+req.getRide_loc_id());
 			rideReqRepo.update(req.getRide_loc_id());
-		}
+		}}
 	}
 	
 	public void updateDeclineStatusToDispatcherId(Long dispatcherId,Long rideId) {
 		List<RideRequest_Dto> requests = rideReqRepo.findByDisId(dispatcherId,rideId);
 	    //System.out.println(requests);
 		for(RideRequest_Dto req:requests) {
-			rideReqRepo.updateByRideId(req.getRide_loc_id());
+			rideReqRepo.updateByRideLocId(req.getRide_loc_id());
 		}
 	}
+	
+	
 	
 	public List<RideRequest> saveRequests(List<RideRequestDto> rideRequest){
 		

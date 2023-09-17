@@ -16,11 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.valam.app.customObject.Ride_History_Object;
 import com.valam.app.model.RideHistory;
 
-
-
-
-
-
 @Repository
 public interface RideHistoryRepositary extends JpaRepository<RideHistory, Serializable>{  
     
@@ -29,9 +24,10 @@ public interface RideHistoryRepositary extends JpaRepository<RideHistory, Serial
          
 	// to fetch records by given start date,end date/driver id/dispatcher id/car id
     @Query(nativeQuery = true, value="select * FROM RIDE_HISTORY where DATE(pickup_date) >= DATE(IFNull(:pickUpDate, pickup_date)) AND  DATE(IFNULL(drop_date,CURDATE()))  <= DATE(IFNULL(:dropDate,CURDATE())) AND IFNULL(DRIVER_ID,0) = IFNULL(:dId, DRIVER_ID)\r\n"
-    		+ "			AND IFNULL(User_ID,0) = IFNULL(:userId,User_ID) AND IFNULL(DISPATCHER_ID,0) = IFNULL(:dispatcherId, DISPATCHER_ID) and IFNULL(sts_id,0) = IFNULL(:stsId, sts_id) order by RIDE_ID DESC;")
-    public List<RideHistory> findByDateBetween(@Param("pickUpDate") LocalDate pickup_Date, @Param("dropDate") LocalDate drop_Date,@Param("dId") Long dId,@Param("userId") Long uId,@Param("dispatcherId") Long disptId,@Param("stsId") Long statusId);
+    		+ "			AND IFNULL(User_ID,0) = IFNULL(:userId,User_ID) AND IFNULL(DISPATCHER_ID,0) = IFNULL(:dispatcherId, DISPATCHER_ID) and IFNULL(sts_id,0) = IFNULL(:stsId, sts_id) AND IFNULL(car_id,0) = IFNULL(:carId, car_id) order by RIDE_ID DESC;")
+    public List<RideHistory> findByDateBetween(@Param("pickUpDate") LocalDate pickup_Date, @Param("dropDate") LocalDate drop_Date,@Param("dId") Long dId,@Param("userId") Long uId,@Param("dispatcherId") Long disptId,@Param("stsId") Long statusId,@Param("carId") Long car_id);
     
+   
  // to fetch records by given start date,end date/driver id/dispatcher id/car id
     @Query(nativeQuery = true, value="select * FROM RIDE_HISTORY where DATE(pickup_date) >= DATE(IFNull(:pickUpDate, pickup_date)) AND  DATE(IFNULL(drop_date,CURDATE()))  <= DATE(IFNULL(:dropDate,CURDATE())) AND IFNULL(DRIVER_ID,0) = IFNULL(:dId, DRIVER_ID)\r\n"
     		+ "			AND IFNULL(User_ID,0) = IFNULL(:userId,User_ID) AND IFNULL(DISPATCHER_ID,0) = IFNULL(:dispatcherId, DISPATCHER_ID) and IFNULL(sts_id,0) = IFNULL(:stsId, sts_id) order by RIDE_ID DESC;")
@@ -45,8 +41,8 @@ public interface RideHistoryRepositary extends JpaRepository<RideHistory, Serial
     
     @Modifying
    	@Transactional
-   	@Query(nativeQuery=true,value ="UPDATE RIDE_HISTORY SET drop_date = :dropDate,sts_id = :status_id WHERE RIDE_ID = :rideId")
-       public void updateStatusafterComplete(@Param("dropDate") LocalDateTime drop_date,@Param("status_id") Long sts_id,@Param("rideId") Long ride_id);
+   	@Query(nativeQuery=true,value ="UPDATE RIDE_HISTORY SET drop_date = :dropDate,sts_id = :status_id,message = :message_ WHERE RIDE_ID = :rideId")
+       public void updateStatusafterComplete(@Param("dropDate") LocalDateTime drop_date,@Param("status_id") Long sts_id,@Param("message_") String message,@Param("rideId") Long ride_id);
     
     @Modifying
    	@Transactional
@@ -54,7 +50,7 @@ public interface RideHistoryRepositary extends JpaRepository<RideHistory, Serial
        public void updateStatusBeforeStarted(@Param("sts_id") Long sts_id,@Param("rideId") Long ride_id);
     
     
-    @Query(nativeQuery=true,value= "Select Ride_ID as ride_id,FROM_ADDRESS as fromAddress,TO_ADDRESS as toAddress,payment_total,payment_type,CAST( drop_date AS DATE) as drop_date,concat(dd.first_name,dd.last_name) as driver_name,cd.car_model as car_name,cd.car_register_id as car_registered_id,dd.image_url as Image_url,rs.status_name as status from ride_history rd Inner Join driver_details dd on dd.driver_id = rd.DRIVER_ID Inner Join car_details cd on cd.car_id =rd.CAR_ID Inner join ride_status rs on rs.sts_id = rd.sts_id and rd.sts_id In (4,10) and rd.USER_ID = ifnull(:userId,rd.USER_ID) and rd.DRIVER_ID = ifnull(:driverId,rd.Driver_id) order by RIDE_ID DESC")
+    @Query(nativeQuery=true,value= "Select Ride_ID as ride_id,FROM_ADDRESS as fromAddress,TO_ADDRESS as toAddress,payment_total,payment_type,rd.distance as distance,rd.comfort_level as comfortLevel,CAST( drop_date AS DATE) as drop_date,concat(dd.first_name,dd.last_name) as driver_name,cd.car_model as car_name,cd.car_register_id as car_registered_id,dd.image_url as Image_url,rs.status_name as status from ride_history rd Inner Join driver_details dd on dd.driver_id = rd.DRIVER_ID Inner Join car_details cd on cd.car_id =rd.CAR_ID Inner join ride_status rs on rs.sts_id = rd.sts_id and rd.sts_id In (4,10) and rd.USER_ID = ifnull(:userId,rd.USER_ID) and rd.DRIVER_ID = ifnull(:driverId,rd.Driver_id) order by RIDE_ID DESC")
     public List<Ride_History_Object> rideTrips(@Param("userId") Long user_id,@Param("driverId") Long driver_id);
     
     @Query(nativeQuery=true,value="SELECT ride_id as ride_id,rs.sts_id as status_id,rs.status_name as status FROM ride_history rh Join ride_status rs on rs.sts_id = rh.sts_id where rh.sts_id = 15 and rh.RIDE_ID = :ride_id")
@@ -64,11 +60,16 @@ public interface RideHistoryRepositary extends JpaRepository<RideHistory, Serial
     public Ride_History_Object getRideByrideSts_10(@Param("ride_id") long rideId);
     
     
-    @Query(nativeQuery=true,value="select * FROM RIDE_HISTORY where DATE(pickup_date) >= DATE(IFNull(:pickupdate, pickup_date)) AND  DATE(IFNULL(drop_date,CURDATE()))  <= DATE(IFNULL(null,CURDATE())) AND IFNULL(User_ID,0) = IFNULL(:userId,User_ID) and sts_id != 10 order by RIDE_ID DESC ;")
-    public List<RideHistory> findByPrevRideByUserId(@Param("pickupdate") LocalDate pickup_Date,@Param("userId") Long uId);
-
+    @Query(nativeQuery=true,value="SELECT * FROM RIDE_HISTORY where sts_id = 8")
+    public List<RideHistory> findDecinedRides();
+    
+    
+    @Query(nativeQuery=true,value="select * FROM RIDE_HISTORY where DATE(pickup_date) >= DATE(IFNull(:pickUpDate, pickup_date)) AND IFNULL(DRIVER_ID,0) = IFNULL(:dId, DRIVER_ID) AND IFNULL(User_ID,0) = IFNULL(:userId,User_ID) AND IFNULL(DISPATCHER_ID,0) = IFNULL(:dispatcherId, DISPATCHER_ID)  AND IFNULL(comfort_level,null)=IFNULL(:comfortLevel,comfort_level) and sts_id NOT IN(3,8,10) order by RIDE_ID DESC")
+    public List<RideHistory> findByPrevRideByUserId(@Param("pickUpDate") LocalDate pickup_Date,@Param("dId") Long dId,@Param("userId") Long uId,@Param("dispatcherId") Long disptId,@Param("comfortLevel") String comfort_level);
     
 	}
+
+   
 
     
    

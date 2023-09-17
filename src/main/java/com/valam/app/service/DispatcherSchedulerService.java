@@ -64,7 +64,7 @@ public class DispatcherSchedulerService {
 		Long driverId = dipschDto.getDriverId();
 		carService.updateCar_Assigned(carId);
 		CarDetails carData = carService.getCarByID(carId);
-		driverService.updateCarAssignedStatus(carData.getCarRegisterId(),driverId);
+		driverService.updateCarAssignedStatus(carData.getCarId(),carData.getCarRegisterId(),driverId);
 		return dispSchRepo.save(dispatcherScheduler);
 		
 		
@@ -112,19 +112,24 @@ public class DispatcherSchedulerService {
        
     /*to fetch all dispatcher scheduler records by given Dates and driver,car and dispatcher. */
     public List<DispatcherScheduler> getDateBetweenandDidandCid(DispSchDto dipschDto){
-            if(dipschDto.getBeginDate() == null && dipschDto.getEndDate() == null && dipschDto.getCarId() == null && dipschDto.getDriverId() == null && dipschDto.getDispatcherId() == null) {
-            	dipschDto.getBeginDate();
-				dipschDto.setBeginDate(LocalDate.now());
-				//dipschDto.getEndDate();
-				//dipschDto.setEndDate(LocalDate.now());
-		     }
-    	
+    	dipschDto.setBeginDate(LocalDate.now());
            return dispSchRepo.findByDateBetweenandDidandCid(dipschDto.getBeginDate(),dipschDto.getEndDate(),dipschDto.getDriverId(),dipschDto.getCarId(),dipschDto.getDispatcherId());
     }
     
     public List<DispatcherScheduler> getByEndTime(Long dispatcher_id){
     	return dispSchRepo.getByDetailsDispatcher(dispatcher_id);
-    }
+    } 
+    
+    
+    
+	/*
+	 * public CarDetails getCaridByDriverId(Long driverId,Long dispatcherId) {
+	 * DispatcherScheduler obj = dispSchRepo.findbyDriverId(driverId, dispatcherId);
+	 * CarDetails car = new CarDetails(); if(obj !=null) {
+	 * car.setCarId(obj.getCarDetails().getCarId()); return car }
+	 * 
+	 * return car; }
+	 */
     
     
     

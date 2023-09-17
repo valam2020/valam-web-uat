@@ -25,10 +25,10 @@ public interface DispatcherSchedulerRepositary extends JpaRepository<DispatcherS
 	public List<DispatcherScheduler> findByDateBetweenandDidandCid(@Param("startDate") LocalDate fromDate, @Param("endDate") LocalDate toDate,@Param("dId") Long dId,@Param("cId") Long cId,@Param("disId") Long dispId);
 	
 	
-	@Query(nativeQuery = true,value ="SELECT dsd.CAR_ID AS car_id FROM dispatcher_scheduler dsd where dsd.END_TIME  IS NULL and dsd.driver_id = :driverId and dsd.dispatcher_id = :disp_id")
-    DispatcherSchedularObject findbyDriverId(@Param("driverId") Long dId, @Param("disp_id") Long dispatcher_id);
+	@Query(nativeQuery = true,value ="SELECT CAR_ID as car_id FROM dispatcher_scheduler where End_Time is null and driver_id = :driverId and dispatcher_id = :disp_id")
+	DispatcherSchedularObject findbyDriverId(@Param("driverId") Long dId, @Param("disp_id") Long dispatcher_id);
 	
 	@Query(nativeQuery = true,value="Select * from dispatcher_scheduler where dispatcher_id = :dispId and End_Time is null")
-	List<DispatcherScheduler> getByDetailsDispatcher(@Param("dispId") Long dispatcher_id);
+	List<DispatcherScheduler> getByDetailsDispatcher(@Param("dispId") Long dispatcher_id); 
 	
 }

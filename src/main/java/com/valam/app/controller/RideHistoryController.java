@@ -111,12 +111,20 @@ public class RideHistoryController {
     	if(udRidesDto.getStsId() == 15) {
     		 rideHisService.updateRideBeforeComplete(udRidesDto.getStsId(), id);
     		 msg.setHttpStatus(200);
-    	    	msg.setMessage("Ride Started Successfully");
-    	}else {
-    		 rideHisService.updateRideAfterComplete(udRidesDto.getDropTime(),udRidesDto.getStsId(),id);
-    		 msg.setHttpStatus(200);
-    	    	msg.setMessage("Ride Completed Successfully");
-    	}   
+    	     msg.setMessage("Ride Started Successfully");
+    	}
+    	
+    	else {
+    		 rideHisService.updateRideAfterComplete(udRidesDto.getDropTime(),udRidesDto.getStsId(),id,udRidesDto.getDriverId(),udRidesDto.getMessage());
+    		    if(udRidesDto.getStsId() == 8) {
+    		    	 msg.setHttpStatus(200);
+    	    	    	msg.setMessage("Ride Declined Successfully");
+    		    }
+    		    else {
+    		    	 msg.setHttpStatus(200);
+    	    	    	msg.setMessage("Ride Completed Successfully");
+    		    }
+    	   }   
     	}     
     	
 		return msg;
@@ -162,11 +170,29 @@ public class RideHistoryController {
     public List<RideHistory> getRideByuserId(@RequestHeader(value="common_token") String commonToken,@RequestBody RideHistoryDto rideDto){
     	List<RideHistory> rideHis = new ArrayList<RideHistory>();
     	if(commonTokenService.getByTokenId(commonToken) != null) {
-    		rideHis = rideHisService.findByUserId(rideDto);
+    		rideHis = rideHisService.findByPendingUserId(rideDto);
     	    return rideHis;
     	
     	}else {
     		return rideHis;
     	}
      }
+    
+    @ApiOperation(value="Api to get Ongoing rides by pickupdate,uderid,driverid,comfort_level")
+    @PostMapping("/ongoing_rides")
+    public List<RideHistory> findOngoingRides(@RequestHeader(value="common_token") String commonToken,@RequestBody RideHistoryDto rideHist){
+    	List<RideHistory> rideHis = new ArrayList<RideHistory>();
+    	if(commonTokenService.getByTokenId(commonToken) != null) { 
+    		rideHis = rideHisService.findByPendingUserId(rideHist);
+    		return rideHis;
+    	}else {
+    		return rideHis;
+    	}
+    }
+    
+    @ApiOperation(value="Api to get Declined Rides")
+    @PostMapping("/declined_rides")
+    public List<RideHistory> findDeclinedRides(){
+    	return rideHisService.getDeclinedRides();
+    }
 }

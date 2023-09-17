@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.valam.app.dto.AddDispatcherDto;
 import com.valam.app.dto.DispatcherDto;
 import com.valam.app.dto.DispatcherDto_1;
 import com.valam.app.model.CommonAPIToken;
@@ -54,7 +56,7 @@ public class DispatcherService {
 	}
 	
 	// to save the record of Dispatcher with diver and car
-    public Dispatcher saveDispatcher(DispatcherDto dispatcherDto) { 
+    public Dispatcher saveDispatcher(AddDispatcherDto dispatcherDto) { 
 		
 		//Driver driver = driverRepo.findById(dispatcherDto.getDriverId()).get(); 
 		//driver.setId(driver.getId());
@@ -68,16 +70,14 @@ public class DispatcherService {
 		dispatcher.setEmail(dispatcherDto.getEmail());
 		dispatcher.setPhNum(dispatcherDto.getPhNum());
 		dispatcher.setAddress(dispatcherDto.getAddress());
-		dispatcher.setPassword(dispatcherDto.getPassword());
 		dispatcher.setDisRegId(dispatcherDto.getDisRegId());
 		dispatcher.setCreatedDate(LocalDate.now());
 		dispatcher.setLatitude(dispatcherDto.getLatitude());
 		dispatcher.setLongitude(dispatcherDto.getLongitude());
 		dispatcher.setPincode(dispatcherDto.getPincode());
 		dispatcher.setImageUrl(dispatcher.getImageUrl());
-		dispatcher.setPassword(dispatcher.getPassword());
 		dispatcher.setDeleted(false);
-		dispatcher.setPassword(passwordEncoder.encode(dispatcher.getPassword()));
+		dispatcher.setPassword(passwordEncoder.encode(dispatcherDto.getPassword()));
 		return dispatcherRepo.save(dispatcher);
 	}
     
@@ -117,7 +117,7 @@ public class DispatcherService {
          return null;
 	}
 	
-    public Dispatcher updateDispatcher(DispatcherDto disp) {
+    public Dispatcher updateDispatcher(AddDispatcherDto disp) {
     	
     	Dispatcher dispatcher = dispatcherRepo.findById(disp.getDispatcherId()).get();
     	if(disp.getLastName() !=null) {
@@ -174,7 +174,7 @@ public class DispatcherService {
     	}else {
     		dispatcher.setImageUrl(dispatcher.getImageUrl());
     	}
-    	dispatcher.setModifiedDate(disp.getModifiedDate());
+    	dispatcher.setModifiedDate(LocalDate.now());
     	dispatcher.setDeleted(false);
     	return dispatcherRepo.save(dispatcher);
     }

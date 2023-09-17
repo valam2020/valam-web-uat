@@ -9,20 +9,21 @@
       "name": "app.auth",
       "type": "com.valam.app.config.AppProperties$Auth",
       "sourceType": "com.valam.app.config.AppProperties",
-      "sourceMethod": "public com.valam.app.config.AppProperties.Auth getAuth() "
+      "sourceMethod": "getAuth()"
     },
     {
       "name": "app.oauth2",
       "type": "com.valam.app.config.AppProperties$OAuth2",
       "sourceType": "com.valam.app.config.AppProperties",
-      "sourceMethod": "public com.valam.app.config.AppProperties.OAuth2 getOauth2() "
+      "sourceMethod": "getOauth2()"
     }
   ],
   "properties": [
     {
       "name": "app.auth.token-expiration-msec",
       "type": "java.lang.Long",
-      "sourceType": "com.valam.app.config.AppProperties$Auth"
+      "sourceType": "com.valam.app.config.AppProperties$Auth",
+      "defaultValue": 0
     },
     {
       "name": "app.auth.token-secret",
@@ -33,6 +34,26 @@
       "name": "app.oauth2.authorized-redirect-uris",
       "type": "java.util.List<java.lang.String>",
       "sourceType": "com.valam.app.config.AppProperties$OAuth2"
+    },
+    {
+      "name": "spring.security.oauth2.twilio.account_sid",
+      "type": "java.lang.String",
+      "description": "A description for 'spring.security.oauth2.twilio.account_sid'"
+    },
+    {
+      "name": "spring.security.oauth2.twilio.auth_token",
+      "type": "java.lang.String",
+      "description": "A description for 'spring.security.oauth2.twilio.auth_token'"
+    },
+    {
+      "name": "spring.security.oauth2.twilio.trail_number",
+      "type": "java.lang.String",
+      "description": "A description for 'spring.security.oauth2.twilio.trail_number'"
+    },
+    {
+      "name": "springdatasource.url.security.oauth2.client.registration.google.client-id",
+      "type": "java.lang.String",
+      "description": "A description for 'springdatasource.url.security.oauth2.client.registration.google.client-id'"
     }
   ],
   "hints": []

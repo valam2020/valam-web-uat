@@ -76,6 +76,9 @@ public class Driver {
 	@Column(name="car_no")
 	private String carNo;
 	
+	@Column(nullable=true,name="car_id")
+	private Long carId;
+	
 	@Column(name="header")
 	private Long header;
 	
@@ -85,6 +88,10 @@ public class Driver {
 	@JsonIgnore
 	@Column(nullable=true,name="password")
 	private String password;
+	
+	@JsonIgnore
+	@Column(nullable=true,name="otp")
+	private String otp;
 	
 	@Column(columnDefinition = "DECIMAL(10,8)", name = "distance")
 	private BigDecimal distance;

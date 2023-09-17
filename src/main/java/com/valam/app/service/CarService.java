@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.valam.app.customObject.CarObject;
 import com.valam.app.dto.CarDto;
 import com.valam.app.dto.CarListDto;
 import com.valam.app.dto.ResponseMessage;
@@ -127,6 +128,10 @@ public class CarService {
 		return carRepo.findByStatus(id);
 	}
 	
+	public List<CarObject> getByComfortLevel(String comfortLevel) {
+		return carRepo.getByComfortLevel(comfortLevel);
+	}
+	
 	public  List<CarDetails> getAllByCarStatus(){
 		return carRepo.findByAllCarStatus();
 	}
@@ -151,6 +156,8 @@ public class CarService {
 		}
 		return message;
 	}  
+	
+	
 	
 	
 

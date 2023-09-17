@@ -16,4 +16,5 @@ public class DriverDtoModel2 {
 	private BigDecimal longitude;
 	private Long dispatcherId;
 	private String comfort_level;
+	
 }

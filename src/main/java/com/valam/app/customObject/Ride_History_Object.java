@@ -17,7 +17,8 @@ public interface Ride_History_Object {
 	String getStatus();
 	//String getImageUrl();
 	Long getStatus_id();
-	
+	float getDistance();
+	String getComfortLevel();
 	Long setStatus_id();
 	Long SetRide_id();
 	String setStatus();

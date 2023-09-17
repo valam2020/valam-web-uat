@@ -70,7 +70,7 @@ public class DispatcherSchedulerController {
     	if(commonTokenService.getByTokenId(commonToken) != null) {
     		disshec = dispSchService.updateDispSch(dispSchDto);
     	}else {
-    		disshec = null;
+    		return disshec;
     	}
     	return disshec;
     }
@@ -82,9 +82,9 @@ public class DispatcherSchedulerController {
     	if(commonTokenService.getByTokenId(commonToken) != null) {
     		disshec = dispSchService.getDateBetweenandDidandCid(dispSchDto);
     	}else {
-    		disshec = null;
+    		return disshec;
     	}
-    	return dispSchService.getDateBetweenandDidandCid(dispSchDto);
+    	return disshec;
     }
     
     @ApiOperation(value = "api to get dispatcher scheduled records by dispatcher_id and whose endTime not null")
@@ -94,7 +94,7 @@ public class DispatcherSchedulerController {
     	if(commonTokenService.getByTokenId(commonToken) != null) {
     		disshec = dispSchService.getByEndTime(id);
     	}else {
-    		disshec = null;
+    		return disshec;
     	}
          return disshec;
     }

@@ -35,13 +35,13 @@ public interface DriverRepositary extends JpaRepository<Driver, Long>{
 	/* Great Circle Diagram. here it draws the dynamic all circle with driver latitude 
 	and longitude and finds the distance. by ASC will nearest Driver with certain radius.*/
 	@Query(nativeQuery = true,value = "select *,\n" +
-            "          ( 111.1111  * acos( cos( radians(:latitude) ) \n" +
+            "          ( 3959  * acos( cos( radians(:latitude) ) \n" +
             "      * cos( radians( current_lat )) \n" +
             "      * cos( radians( current_lng ) - radians(:longitude)) \n" +
             "      + sin( radians(:latitude) ) \n" +
             "      * sin( radians( current_lat ) ) ) ) AS distance \n" +
             "        from Driver_Details where driver_status != 'ride_queue' AND sts_id=2 AND sts_id != 11 AND DISPATCHER_ID = IFNULL(:disId, DISPATCHER_ID)\n" +
-            " and is_car_assigned = true HAVING distance < 50 Order By distance" )
+            " and is_car_assigned = true HAVING distance < 10 Order By distance" )
       public List<Driver> findDistance(
             @Param("latitude") BigDecimal latitude,
             @Param("longitude") BigDecimal longitude, @Param("disId") Long dispatcherId);
@@ -59,6 +59,21 @@ public interface DriverRepositary extends JpaRepository<Driver, Long>{
 	@Transactional
 	@Query(nativeQuery = true, value="Update Driver_Details SET driver_status = 'ride_queue' where Driver_ID = :id")
     public void updateByDriverStatus(@Param("id") Long id);
+	
+	@Modifying
+	@Transactional
+	@Query(nativeQuery = true, value="Update Driver_Details SET otp =:otp where Driver_ID = :id")
+    public void updateDriverEmailOTP(@Param("otp") String otp, @Param("id") Long id);
+	
+	@Modifying
+	@Transactional
+	@Query(nativeQuery = true, value="Update Driver_Details SET  sts_id =:stsId where Driver_ID = :id")
+    public void updateByStatus(@Param("stsId") Long sts_id,@Param("id") Long id);
+	
+	@Modifying
+	@Transactional
+	@Query(nativeQuery = true, value="Update Driver_Details SET driver_status = 'no_ride', sts_id =:stsId where Driver_ID = :id")
+    public void updateByStatusbydriver(@Param("stsId") Long sts_id,@Param("id") Long id);
 	
 	@Query(nativeQuery = true, value="select * from Driver_Details where sts_id !=11")
 	public List<Driver> findByALLDrivers();
@@ -82,8 +97,8 @@ public interface DriverRepositary extends JpaRepository<Driver, Long>{
 	
 	@Modifying
 	@Transactional
-	@Query(nativeQuery = true, value="UPDATE Driver_Details SET is_car_assigned = true,car_no= :carNo WHERE sts_id !=11 and driver_id = :driverid")
-	public void updateCarAssigned(@Param("carNo") String car_no,@Param("driverid") Long id);
+	@Query(nativeQuery = true, value="UPDATE Driver_Details SET is_car_assigned = true,car_id= :carId,car_no= :carNo WHERE sts_id !=11 and driver_id = :driverid")
+	public void updateCarAssigned(@Param("carId") Long car_id,@Param("carNo") String car_no,@Param("driverid") Long id);
 	
 	
 	@Modifying
@@ -93,7 +108,7 @@ public interface DriverRepositary extends JpaRepository<Driver, Long>{
 	
 	@Modifying
 	@Transactional
-	@Query(nativeQuery = true, value="UPDATE Driver_Details SET is_car_assigned = false WHERE sts_id !=11 and driver_id = :driverid")
+	@Query(nativeQuery = true, value="UPDATE Driver_Details SET is_car_assigned = false,car_id = null WHERE sts_id !=11 and driver_id = :driverid")
 	public void updateCarAssignedFalse(@Param("driverid") Long driverId);
 	
 	@Modifying

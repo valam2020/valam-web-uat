@@ -11,8 +11,8 @@ public class DispatcherLoginDto {
 
 	private String email;
 	private String password;
-	private String message;
-	private long httpStatus;
+//	private String message;
+//	private long httpStatus;
 	private String loginId;
 	private String deviceId;
 }

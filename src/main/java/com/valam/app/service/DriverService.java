@@ -32,6 +32,9 @@ public class DriverService {
 	//@Autowired
 	//private CarRepositary carRepo;
 	
+	 @Autowired
+	    private CommonApiTokenService capiTokenService;
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -78,6 +81,7 @@ public class DriverService {
 		driverd.setPassword(passwordEncoder.encode(driver.getPassword()));
 		driverd.setDlbackimage(driver.getDlbackImage());
 		driverd.setDlfrontimage(driver.getDlfrontimage());
+		driverd.setToken(driver.getToken());		
 		return driverrepo.save(driverd);
 	}
     
@@ -107,18 +111,19 @@ public class DriverService {
 	} 
 	
 	// to delete driver record from Database
-	public ResponseMessage deleteDriver(String token,Long id) {
+	public ResponseMessage deleteDriver(String commonToken,Long id) {
 		ResponseMessage message = new ResponseMessage();
-		if(driverrepo.getByToken(token).getId() != null) {
-		  driverrepo.deleteByDriverId(id);
-		if(driverrepo.existsById(id) == true) {
-		message.setHttpStatus(200);
-		message.setMessage("Successfully Deleted" +id);
-		}
-		else {
-			message.setHttpStatus(400);
-			message.setMessage("Not Found" +id);
-		}
+		
+		if(capiTokenService.getByTokenId(commonToken).getAuth_common_id() !=null) {
+			Driver driver = driverrepo.findById(id).get();
+			if(driver.getDriver_status() == "no_ride" && driver.is_car_assigned()) { 
+				driverrepo.deleteByDriverId(id);
+				message.setHttpStatus(200);
+				message.setMessage("Successfully Deleted" +id);
+			}else {
+				message.setHttpStatus(400);
+				message.setMessage(" driver is on ride can't delete it now" +id);
+			}
 		}
 		return message;
 	}
@@ -232,8 +237,13 @@ public class DriverService {
 		if(driverrepo.existsByEmail(driver.getEmail())) {
 			Long id = driverrepo.findByEmail(driver.getEmail()).getId();
 			Driver driv = driverrepo.findById(id).get();
-			driv.setPassword(passwordEncoder.encode(driver.getPassword()));
-			return driverrepo.save(driv);
+			if(driv.getOtp().equals(driver.getOtp())){
+				driv.setPassword(passwordEncoder.encode(driver.getPassword()));
+				return driverrepo.save(driv);
+			}else {
+				driv.setPassword(passwordEncoder.encode(driver.getPassword()));
+				return driverrepo.save(driv);
+			}
 		}
 		else 
 			return null;
@@ -252,8 +262,8 @@ public class DriverService {
 		return driverrepo.getAllAvailableDrivers();
 	}
 	
-	public void updateCarAssignedStatus(String car_no,Long id) {
-		driverrepo.updateCarAssigned(car_no,id);
+	public void updateCarAssignedStatus(Long carId,String car_no,Long id) {
+		driverrepo.updateCarAssigned(carId,car_no,id);
 		return ;
 	}
 	
@@ -264,6 +274,11 @@ public class DriverService {
 	
 	public void updateDispatcherId(Long dispatcherId,Long driverId) {
 		driverrepo.updateDispatcherId(dispatcherId,driverId);
+		return ;
+	}
+	
+	public void updateByStatusbydriver(Long statusId,Long driverId) {
+		driverrepo.updateByStatusbydriver(statusId,driverId);
 		return ;
 	}
 

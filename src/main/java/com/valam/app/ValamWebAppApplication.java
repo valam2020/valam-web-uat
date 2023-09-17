@@ -18,3 +18,4 @@ public class ValamWebAppApplication {
 		SpringApplication.run(ValamWebAppApplication.class, args);		
 		}
 }
+

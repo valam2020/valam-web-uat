@@ -153,7 +153,7 @@ public class UserService {
 	 public User findByPhNumAndEmail(UserDto user) {
 		 System.out.println("user"+user.getEmail()+user.getPhNum());
 		 User use = userRepo.findByMobileNumAndEmail(user.getPhNum(),user.getEmail());
-		 System.out.println("user"+use.getEmail());
+		// System.out.println("user"+use.getEmail());
 		 return use;
 	 }
 	 

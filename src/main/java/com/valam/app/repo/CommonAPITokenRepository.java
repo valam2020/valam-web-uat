@@ -14,7 +14,5 @@ public interface CommonAPITokenRepository extends JpaRepository<CommonAPIToken,L
 	@Query(nativeQuery=true,value="Select * from common_API_Token where auth_common_id=:commonId")
 	CommonAPIToken getByTokenId(@Param("commonId") String commonId);
 	
-	
-	
 
 }

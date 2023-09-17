@@ -99,7 +99,7 @@ public class UserController {
     	  CommonAPIToken apiToken = new CommonAPIToken();
     	  boolean isExist  = userRepository.existsByEmail(signUpRequest.getEmail());
         if(userRepository.findByMobileNumAndEmail(signUpRequest.getPhNum(),signUpRequest.getEmail()) != null) {
-        	  userDto.setHttpStatus(200);
+        	  userDto.setHttpStatus(400);
               userDto.setMessage("Email & Mobile exist");
         }else if(userRepository.findByMobileNumAndEmail(null,signUpRequest.getEmail()) != null) {
         	 userDto.setHttpStatus(400);
@@ -118,7 +118,9 @@ public class UserController {
              apiToken.setAuth_common_id("User"+"-"+LocalDate.now()+"-"+String.valueOf(((int) (Math.random() * (10000 - 1000))) + 1000));
  			 apiToken.setLoggedin_user_name("User"+userDto.getFirstName());
  			 CommonAPIToken apiToken1 = tokenService.save(apiToken);
- 			 userDto.setCommon_token_id(apiToken1.getAuth_common_id());             
+ 			 userDto.setCommon_token_id(apiToken1.getAuth_common_id());
+ 			 userDto.setHttpStatus(200);
+ 	         userDto.setMessage("User Registered Successfully");
         }
        // URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/me")
         //        .buildAndExpand(result.getId()).toUri();
@@ -253,38 +255,43 @@ public class UserController {
 //        return message;
 //    }   
     
-    @ApiOperation(value = "api to verify existing user by phone number or e-mail")
+    @SuppressWarnings("unused")
+	@ApiOperation(value = "api to verify existing user by phone number or e-mail")
     @PostMapping("/login")
 	public UserDto login(@RequestBody UserDto userDto) {
     	UserDto user = new UserDto();
     	CommonAPIToken apiToken = new CommonAPIToken();
 		
-		User u = userService.findByPhNumAndEmail(userDto);
-		String token = jwtCreator.getJWTToken(u.getEmail());
-		if(u != null) {
-			user.setId(u.getId());
+		User user_data = userService.findByPhNumAndEmail(userDto);
+		if(user_data != null) {
+			String token = jwtCreator.getJWTToken(user_data.getEmail());
+			user.setId(user_data.getId());
 			user.setToken(token);
 			userService.updateUserToken(user);
 			apiToken.setAuth_common_id("User"+"-"+LocalDate.now()+"-"+String.valueOf(((int) (Math.random() * (10000 - 1000))) + 1000));
-			apiToken.setLoggedin_user_name("User"+u.getFirstName());
+			apiToken.setLoggedin_user_name("User"+user_data.getFirstName());
 			CommonAPIToken apiToken1 = tokenService.save(apiToken);
 			//User userData = userService.findByPhNumAndEmail(userDto);
-			user.setCreatedDate(u.getCreatedDate());
-			user.setEmail(u.getEmail());
+			user.setCreatedDate(user_data.getCreatedDate());
+			user.setEmail(user_data.getEmail());
 			user.setExist(true);
-			user.setFirstName(u.getFirstName());
-			user.setId(u.getId());
-			user.setImageUrl(u.getImageUrl());
-			user.setLastName(u.getLastName());
-			user.setMiddleName(u.getMiddleName());
-			user.setName(u.getMiddleName());
-			user.setPhNum(u.getPhNum());
-			user.setSocial_signup_id(u.getSocial_signup_id());
+			user.setFirstName(user_data.getFirstName());
+			user.setId(user_data.getId());
+			user.setImageUrl(user_data.getImageUrl());
+			user.setLastName(user_data.getLastName());
+			user.setMiddleName(user_data.getMiddleName());           
+			user.setName(user_data.getName());
+			user.setPhNum(user_data.getPhNum());
+			user.setSocial_signup_id(user_data.getSocial_signup_id());
 			user.setToken(token);
 			user.setCommon_token_id(apiToken1.getAuth_common_id());
+			user.setHttpStatus(200);
+			user.setMessage("USER Logged In Successfully");
 			return user;
 		}else {
-            return null;
+			user.setHttpStatus(404);
+			user.setMessage("USER not registered");
+			return user;
 		}
 	}
 }

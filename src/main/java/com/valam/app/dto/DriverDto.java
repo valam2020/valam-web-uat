@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class DriverDto { 
 	
 	private Long id;
+	private Long driverId;
 	private Long stsId;
 	private Long dispatcherId;
 	private String firstName;

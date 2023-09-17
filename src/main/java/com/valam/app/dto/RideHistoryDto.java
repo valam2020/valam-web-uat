@@ -28,6 +28,7 @@ public class RideHistoryDto {
 	private Long stsId;
 	private long expiryTimer;
 	private String otp;
+	private String message;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate pickupDate;
 	
@@ -41,6 +42,7 @@ public class RideHistoryDto {
 	private BigDecimal  pickupLng;
 	private BigDecimal dropLat;
 	private BigDecimal dropLng;
+	private String comfort_level;
 	
 	/*DTO, which stands for Data Transfer Object, 
 	is a design pattern conceived to reduce the number of calls when working with remote interfaces.the main reason 

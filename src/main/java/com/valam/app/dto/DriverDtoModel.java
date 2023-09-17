@@ -13,6 +13,7 @@ public class DriverDtoModel {
 
 	private String email;
 	private String password;
+	private String otp;
 	//private String loginId;
 	//private String deviceId;
 	

@@ -1,8 +1,8 @@
 package com.valam.app.controller;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,15 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.valam.app.dto.CarDto;
 import com.valam.app.dto.CarListDto;
 import com.valam.app.dto.ResponseMessage;
+import com.valam.app.dto.RideHistory_Dto;
 import com.valam.app.model.CarDetails;
 import com.valam.app.model.CarList;
+import com.valam.app.model.RideHistory;
+import com.valam.app.repo.RideHistoryRepositary;
 import com.valam.app.service.CarService;
 import com.valam.app.service.CommonApiTokenService;
+import com.valam.app.service.DispatcherSchedulerService;
+
+import io.swagger.annotations.ApiOperation;
+
 
 
 @RestController
 @CrossOrigin(origins = "*")
-
 @RequestMapping("/car")
 public class CarController {
 
@@ -35,6 +41,12 @@ public class CarController {
    
     @Autowired
     private CommonApiTokenService commonTokenService;
+    
+    @Autowired
+    private DispatcherSchedulerService dispSchService;
+    
+    @Autowired
+    private RideHistoryRepositary rideHisrepo;
     
     @ApiOperation(value = "api to add new car details")
     @PostMapping("/add")
@@ -96,17 +108,25 @@ public class CarController {
     public ResponseMessage deleteCar(@RequestHeader(value="common_token") String commonToken,@RequestBody CarDto car) {
     	 ResponseMessage message = new ResponseMessage();
     	if(commonTokenService.getByTokenId(commonToken) != null) {
-    		 carService.deleteCar(car.getCarId());
-    	       
-    	        message.setHttpStatus(201);
+    		RideHistory_Dto rideDto = new RideHistory_Dto();
+    		rideDto.setCarId(car.getCarId());
+    		rideDto.setPickupDate(LocalDate.now());
+    		rideDto.setStatusId((long) 15);
+    		List<RideHistory> ride = rideHisrepo.findByDateBetween(rideDto.getPickupDate(),null,null,null,null,rideDto.getStatusId(),rideDto.getCarId());
+    		if(ride != null) {
+    			carService.deleteCar(car.getCarId());
+    			message.setHttpStatus(201);
     	        message.setMessage("Successfully Deleted"+car.getCarId());
+    	        return message;
+    		}  
     	}else {
     	
 	        message.setHttpStatus(400);
 	        message.setMessage("Not Deleted"+car.getCarId());
+	        return message;
     	}
-       
-        return message;
+		return message;
+        
     }
 
     @ApiOperation(value = "api to update car details by car id")
@@ -151,6 +171,9 @@ public class CarController {
     	}
     	return message;
     }
+    
+    
+    
 
 }
 
