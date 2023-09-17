@@ -1,1 +1,2 @@
-# valam-web-uat
+# valam-web-app
+Valam backend services and web application
