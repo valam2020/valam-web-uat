@@ -30,7 +30,7 @@ public class ValamEmailController {
 		String otp = null;
 		String subject = null;
 		String status = null;
-		ResponseMessage message = null;
+		ResponseMessage message = new ResponseMessage();
 		Driver driver = driverRepo.findByEmail(details.getRecipient());
 
 		if (details.getRecipient() != null && driver.getEmail() != null) {
