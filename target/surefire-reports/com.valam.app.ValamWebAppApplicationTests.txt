@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.valam.app.ValamWebAppApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 155.785 s - in com.valam.app.ValamWebAppApplicationTests
