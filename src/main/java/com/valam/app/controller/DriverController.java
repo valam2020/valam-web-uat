@@ -134,6 +134,12 @@ public class DriverController {
     	}
     	
     }
+    
+    @ApiOperation(value = "api to Driver email")
+    @PostMapping("/email_valid")
+    public DriverDtoModel getByEmail(@RequestBody DriverDto driver) {
+    	return driverService.getByEmail(driver);
+    }
 
     @ApiOperation(value = "api to update the driver records by driver")
     @PutMapping("/update")

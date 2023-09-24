@@ -249,6 +249,14 @@ public class DriverService {
 			return null;
 		
 	}
+   
+   public DriverDtoModel getByEmail(DriverDto driver) {
+	   Driver driverbyEMail = driverrepo.findByEmail(driver.getEmail());
+	   DriverDtoModel driver_new = new DriverDtoModel();
+	   driver_new.setOtp(driverbyEMail.getOtp());
+	   driver_new.setEmail(driverbyEMail.getEmail());
+	   return driver_new;
+   }
 	
 	public Driver isDriverExist(String email,String PhNum,String dlNum) {
 		return driverrepo.findByExist(email,PhNum,dlNum);
