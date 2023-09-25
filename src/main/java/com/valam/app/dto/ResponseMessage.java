@@ -12,4 +12,5 @@ public class ResponseMessage {
 	private long httpStatus;
 	private String message;
     private boolean isExist;
+    private String otp;
 }
