@@ -134,12 +134,6 @@ public class DriverController {
     	}
     	
     }
-    
-    @ApiOperation(value = "api to Driver email")
-    @PostMapping("/email_valid")
-    public DriverDtoModel getByEmail(@RequestBody DriverDto driver) {
-    	return driverService.getByEmail(driver);
-    }
 
     @ApiOperation(value = "api to update the driver records by driver")
     @PutMapping("/update")
@@ -354,6 +348,12 @@ public class DriverController {
     	return driverService.resetPassword(driver);
     }
     
+    @ApiOperation(value = "api to Driver email")
+    @PostMapping("/email_valid")
+    public DriverDtoModel getByEmail(@RequestBody DriverDto driver) {
+    	return driverService.getByEmail(driver);
+    }
+    
     @ApiOperation(value = "api to check driver isExist or not")
     @PostMapping("/exist")
     public Driver isExistorNot(@RequestBody DriverDto driver) {
@@ -417,6 +417,8 @@ public class DriverController {
     	 driver.setMessage("Successfully Updated");
     	 return driver;
     }
+    
+   
     
 }
 

@@ -84,7 +84,7 @@ public interface DriverRepositary extends JpaRepository<Driver, Long>{
 	Driver findByEmailId(@Param("emailId") String email, @Param("passcode") String password);
 	
 	@Query(nativeQuery = true, value="select * from Driver_Details where sts_id !=11 and email = :emailId")
-	Driver findByEmail(@Param("emailId") String email);
+	public Driver findByEmail(@Param("emailId") String email);
 	
 	@Query(nativeQuery = true, value="select * from Driver_Details where sts_id !=11 and email = IFNULL(:emailid, email) and ph_num = IFNULL(:phNum, ph_num) and dl_num = IFNULL(:dlNum, dl_num)")
 	Driver findByExist (@Param("emailid") String emailid, @Param("phNum") String phNum, @Param("dlNum") String dlNum);

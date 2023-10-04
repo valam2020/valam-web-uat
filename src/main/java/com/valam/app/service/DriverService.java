@@ -287,7 +287,6 @@ public class DriverService {
 	
 	public void updateByStatusbydriver(Long statusId,Long driverId) {
 		driverrepo.updateByStatusbydriver(statusId,driverId);
-		return ;
 	}
 
 }

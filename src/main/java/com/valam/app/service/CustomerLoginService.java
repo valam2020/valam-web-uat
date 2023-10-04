@@ -38,11 +38,7 @@ public class CustomerLoginService {
 		customer.setReason(customerDto.getReason());
 		customer.setRole_id(customerDto.getRole_id());
 		customer.setPassword(passwordEncoder.encode(customerDto.getPassword()));
-		customer.setUsercomments(customerDto.getUserComments());
-		customer.set_reviewbyadmin(customerDto.is_reviewByAdmin());
-		customer.set_reviewbyexecutive(customerDto.is_reviewByExecutive());
-		customer.setReviewbyadmin(customerDto.getReviewByAdmin());
-		customer.setReviewbyexecutive(customerDto.getReviewByExecutive());
+		
 		return customerLoginRepo.save(customer);
 	}
 
@@ -64,11 +60,7 @@ public class CustomerLoginService {
 			customer.setPhoneNumber(customerDto.getPhoneNumber());
 			customer.setReason(customerDto.getReason());
 			customer.setRole_id(customerDto.getRole_id());
-			customer.setUsercomments(customerDto.getUserComments());
-			customer.set_reviewbyadmin(false);
-			customer.set_reviewbyexecutive(false);
-			customer.setReviewbyadmin(customerDto.getReviewByAdmin());
-			customer.setReviewbyexecutive(customerDto.getReviewByExecutive());
+			
 			return customerLoginRepo.save(customer);
 		} else {
 			return customer = null;

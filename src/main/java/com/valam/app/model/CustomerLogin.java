@@ -73,20 +73,7 @@ public class CustomerLogin {
 	@Column(nullable = true,name ="is_active")
 	private boolean is_active;
 	
-	@Column(name = "usercomments",length=600)
-	private String usercomments;
-	
- 	@Column(name = "reviewbyadmin",length=600)
-	private String reviewbyadmin;
-	
- 	@Column(name = "reviewbyexecutive",length=600)
-	private String reviewbyexecutive;
  	
- 	@Column(name ="is_reviewbyadmin")
-	private boolean is_reviewbyadmin;
- 	
- 	@Column(name ="is_reviewbyexecutive")
-	private boolean is_reviewbyexecutive;
  	
  	
 }

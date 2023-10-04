@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.valam.app.customObject.DeclinedRideObject;
 import com.valam.app.customObject.Ride_History_Object;
+import com.valam.app.dto.DeclinedRideObjectDto;
 import com.valam.app.dto.ResponseMessage;
 import com.valam.app.dto.RideHistoryDto;
 import com.valam.app.dto.RideHistory_Dto;
@@ -192,7 +194,7 @@ public class RideHistoryController {
     
     @ApiOperation(value="Api to get Declined Rides")
     @PostMapping("/declined_rides")
-    public List<RideHistory> findDeclinedRides(){
+    public List<DeclinedRideObjectDto> findDeclinedRides(){
     	return rideHisService.getDeclinedRides();
     }
 }

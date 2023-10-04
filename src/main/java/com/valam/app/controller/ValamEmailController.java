@@ -42,7 +42,7 @@ public class ValamEmailController {
 			details.setId(driver.getId());
 			status = emailService.sendSimpleMail(details);
 			message.setHttpStatus(200);
-			message.setOtp(otp);		
+			message.setOtp(otp);
 			message.setMessage(status);
 			driverRepo.updateDriverEmailOTP(otp, details.getId());
 			return message;

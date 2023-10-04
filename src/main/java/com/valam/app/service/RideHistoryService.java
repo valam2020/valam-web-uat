@@ -3,17 +3,24 @@ package com.valam.app.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import com.valam.app.customObject.DeclinedRideObject;
 import com.valam.app.customObject.Ride_History_Object;
+import com.valam.app.customObject.UserObject;
+import com.valam.app.dto.DeclinedRideObjectDto;
 import com.valam.app.dto.ResponseMessage;
 import com.valam.app.dto.RideHistoryDto;
 import com.valam.app.dto.RideHistory_Dto;
+import com.valam.app.dto.User_DtoObject;
 import com.valam.app.model.CarDetails;
 import com.valam.app.model.Dispatcher;
 import com.valam.app.model.Driver;
@@ -367,8 +374,40 @@ public class RideHistoryService {
 				rideHist.getUserId(), rideHist.getDispatcherId(), rideHist.getComfort_level());
 	}
 	
-	public List<RideHistory> getDeclinedRides(){
-		return rideHisRepo.findDecinedRides();
+	public List<DeclinedRideObjectDto> getDeclinedRides(){
+		List<DeclinedRideObject> drobject = rideHisRepo.findDecinedRides();
+		Set<Long> userIdList = new HashSet<>();
+		for(DeclinedRideObject douser:drobject) {
+			userIdList.add(douser.getUser_id());
+		}
+		Map<Long,UserObject> userList = new HashMap<>();
+		for(Long userId:userIdList) {
+			UserObject user_d = userrepo.findByUserId(userId);
+			System.out.println(user_d.getUser_id());
+			userList.put(userId, user_d);
+		}
+		
+		List<DeclinedRideObjectDto> declinerideOb = new ArrayList<>();
+		for(DeclinedRideObject doruser:drobject) {
+			DeclinedRideObjectDto delride = new DeclinedRideObjectDto();
+			delride.setCarId(doruser.getCar_id());
+			delride.setDispatcherId(doruser.getDispatcher_id());	
+			delride.setDriverId(doruser.getDriver_id());
+			delride.setRide_id(doruser.getRide_id());
+			delride.setMessage(doruser.getMessage());
+			delride.setFrom_Address(doruser.getFromAddress());
+			delride.setTo_Address(doruser.getToAddress());
+			delride.setComfortLevel(doruser.getComfortLevel());
+			User_DtoObject userDtoObject = new User_DtoObject();
+			userDtoObject.setEmail(userList.get(doruser.getUser_id()).getEmail());
+			userDtoObject.setName(userList.get(doruser.getUser_id()).getUserName());
+			userDtoObject.setPhNum(userList.get(doruser.getUser_id()).getPhNum());
+			userDtoObject.setUser_Id(doruser.getUser_id());
+			delride.setUserObject(userDtoObject);
+			declinerideOb.add(delride);
+		}
+		
+		return declinerideOb;
 	}
 
 }

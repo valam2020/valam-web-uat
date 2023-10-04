@@ -22,10 +22,6 @@ public class CustomerLoginDto {
 	private String role_id;
 	private String reason;
 	private String roleCode;
-	private String userComments;
-	private String reviewByAdmin;
-	private boolean is_reviewByAdmin;
-	private String reviewByExecutive;
-	private boolean is_reviewByExecutive;
+	
 
 }

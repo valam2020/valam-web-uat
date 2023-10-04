@@ -3,6 +3,7 @@ package com.valam.app.repo;
 import java.util.List;
 import java.util.Optional;
 
+import com.valam.app.customObject.UserObject;
 import com.valam.app.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -36,4 +37,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	
 	@Query(nativeQuery=true,value="Select * from USER_DETAILS where token= :tokendata")
 	public User findByToken(@Param("tokendata") String token);
+	
+	@Query(nativeQuery=true,value="Select user_id,concat(First_name,\" \",Middle_name,\" \",Last_name) as userName,email,PH_NUM as PhNum from USER_DETAILS where USER_ID = :user_id")
+	public UserObject findByUserId(@Param("user_id") Long id);
 }
