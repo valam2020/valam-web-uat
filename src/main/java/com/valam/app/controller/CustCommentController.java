@@ -15,13 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.valam.app.dto.CustomerLoginDto;
-import com.valam.app.dto.ResponseMessage;
-import com.valam.app.model.CommentsTable;
-import com.valam.app.model.CustomerCommentTable;
-import com.valam.app.model.CustomerLogin;
-import com.valam.app.service.CustCommentService;
 
+import com.valam.app.dto.ResponseMessage;
+import com.valam.app.model.CustomerCommentTable;
+import com.valam.app.service.CustCommentService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -61,6 +58,12 @@ public class CustCommentController {
 	@GetMapping("/customer/{id}")
 	public CustomerCommentTable findbycustId(@PathVariable Long id) {
 		return custCommentService.getByCustomer(id);
+	}
+	
+	@ApiOperation(value = "api to get by rideId")
+	@GetMapping("/ride/{id}")
+	public List<CustomerCommentTable> findbyRideId(@PathVariable Long id) {
+		return custCommentService.getByRideId(id);
 	}
 	
 	 @ApiOperation(value = "api to delete the customer Login")

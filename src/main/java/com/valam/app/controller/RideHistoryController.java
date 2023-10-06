@@ -19,6 +19,7 @@ import com.valam.app.customObject.DeclinedRideObject;
 import com.valam.app.customObject.Ride_History_Object;
 import com.valam.app.dto.DeclinedRideObjectDto;
 import com.valam.app.dto.ResponseMessage;
+import com.valam.app.dto.RideCommentsDto;
 import com.valam.app.dto.RideHistoryDto;
 import com.valam.app.dto.RideHistory_Dto;
 import com.valam.app.model.RideHistory;
@@ -197,4 +198,16 @@ public class RideHistoryController {
     public List<DeclinedRideObjectDto> findDeclinedRides(){
     	return rideHisService.getDeclinedRides();
     }
+    
+    @ApiOperation(value="Api to update ride commnets by admin/executive")
+    @PostMapping("/updateride_comments")
+    public ResponseMessage updateRideComments(@RequestBody RideCommentsDto rideCommentsDto){
+    	rideHisService.updateRideCommentByadmin(rideCommentsDto);
+    	ResponseMessage message = new ResponseMessage();
+    	message.setHttpStatus(200);
+    	message.setMessage("Ride Comments Updated Successfully");
+    	return message;
+    }
+    
+    
 }

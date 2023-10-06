@@ -41,22 +41,5 @@ public class CustomerCommentTable {
 	@Column(name = "usercomments",length=600)
 	private String usercomments;
 	
-	@Column(name = "admincomments",length=600)
-	private String admincomments;
-	
-	@Column(name = "executivecomments",length=600)
-	private String executivecomments;
-	
-	@Column(name = "reviewbyadmin",length=600)
-	private String reviewbyadmin;
-	
- 	@Column(name = "reviewbyexecutive",length=600)
-	private String reviewbyexecutive;
- 	
- 	@Column(name ="is_reviewbyadmin")
-	private Boolean is_reviewbyadmin;
- 	
- 	@Column(name ="is_reviewbyexecutive")
-	private Boolean is_reviewbyexecutive;
 
 }

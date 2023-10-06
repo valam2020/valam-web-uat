@@ -90,6 +90,18 @@ public class RideHistory implements Serializable  {
 	
 	@Column(name="comfort_level")
 	private String comfort_level;
+	
+	@Column(name = "admincomments",length=600)
+	private String admincomments;
+	
+ 	@Column(name = "executivecomments",length=600)
+	private String executivecomments;
+ 	
+ 	@Column(name ="is_reviewbyadmin")
+	private Boolean is_reviewbyadmin;
+ 	
+ 	@Column(name ="is_reviewbyexecutive")
+	private Boolean is_reviewbyexecutive;
 	  //to map many to one relation ship with User and RideHistory
 	  
 	  @ManyToOne(fetch = FetchType.LAZY)

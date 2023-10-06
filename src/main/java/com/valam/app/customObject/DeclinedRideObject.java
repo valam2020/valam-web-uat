@@ -13,6 +13,8 @@ public interface DeclinedRideObject {
 	Long getUser_id();
 	Long getDriver_id();
 	Long getDispatcher_id();
+	Long getStatus_id();
+	String getStatus_name();
 	
 	
 }

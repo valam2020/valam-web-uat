@@ -61,13 +61,12 @@ public interface RideHistoryRepositary extends JpaRepository<RideHistory, Serial
     public Ride_History_Object getRideByrideSts_10(@Param("ride_id") long rideId);
     
     
-    @Query(nativeQuery=true,value="Select rd.Ride_id as ride_id,rd.FROM_ADDRESS as fromAddress,rd.TO_ADDRESS as toAddress,rd.message,rd.comfort_level as comfortLevel,rd.user_id,rd.car_id,rd.driver_id,rd.DISPATCHER_ID from ride_history rd where rd.sts_id = 8")
+    @Query(nativeQuery=true,value="Select rd.Ride_id as ride_id,rd.FROM_ADDRESS as fromAddress,rd.TO_ADDRESS as toAddress,rd.message,rd.comfort_level as comfortLevel,rd.user_id,rd.car_id,rd.driver_id,rd.DISPATCHER_ID , rd.sts_id as status_id,rs.status_name as status_name from ride_history rd Inner join ride_status rs on rs.sts_id = rd.sts_id where rd.sts_id = 8 ")
     public List<DeclinedRideObject> findDecinedRides(); // SELECT * FROM RIDE_HISTORY where sts_id = 8
     
         
     @Query(nativeQuery=true,value="select * FROM RIDE_HISTORY where DATE(pickup_date) >= DATE(IFNull(:pickUpDate, pickup_date)) AND IFNULL(DRIVER_ID,0) = IFNULL(:dId, DRIVER_ID) AND IFNULL(User_ID,0) = IFNULL(:userId,User_ID) AND IFNULL(DISPATCHER_ID,0) = IFNULL(:dispatcherId, DISPATCHER_ID)  AND IFNULL(comfort_level,null)=IFNULL(:comfortLevel,comfort_level) and sts_id NOT IN(3,8,10) order by RIDE_ID DESC")
     public List<RideHistory> findByPrevRideByUserId(@Param("pickUpDate") LocalDate pickup_Date,@Param("dId") Long dId,@Param("userId") Long uId,@Param("dispatcherId") Long disptId,@Param("comfortLevel") String comfort_level);
-    
 	}
 
    

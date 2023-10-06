@@ -18,5 +18,7 @@ public class DeclinedRideObjectDto {
 	private Long dispatcherId;
 	private String comfortLevel;
 	private User_DtoObject userObject;
+	private Long sts_id;
+	private String status_name;
 
 }

@@ -18,6 +18,7 @@ import com.valam.app.customObject.Ride_History_Object;
 import com.valam.app.customObject.UserObject;
 import com.valam.app.dto.DeclinedRideObjectDto;
 import com.valam.app.dto.ResponseMessage;
+import com.valam.app.dto.RideCommentsDto;
 import com.valam.app.dto.RideHistoryDto;
 import com.valam.app.dto.RideHistory_Dto;
 import com.valam.app.dto.User_DtoObject;
@@ -404,10 +405,21 @@ public class RideHistoryService {
 			userDtoObject.setPhNum(userList.get(doruser.getUser_id()).getPhNum());
 			userDtoObject.setUser_Id(doruser.getUser_id());
 			delride.setUserObject(userDtoObject);
+			delride.setSts_id(doruser.getStatus_id());
+			delride.setStatus_name(doruser.getStatus_name());
 			declinerideOb.add(delride);
 		}
 		
 		return declinerideOb;
+	}
+	
+	public void updateRideCommentByadmin(RideCommentsDto rideDto) {
+		RideHistory rideHistory = rideHisRepo.findById(rideDto.getRideId()).get();
+		rideHistory.setAdmincomments(rideDto.getAdmincomments());
+		rideHistory.setIs_reviewbyadmin(rideDto.getIs_reviewbyadmin());
+		rideHistory.setExecutivecomments(rideDto.getExecutivecomments());
+		rideHistory.setIs_reviewbyexecutive(rideDto.getIs_reviewbyexecutive());
+		rideHisRepo.save(rideHistory);
 	}
 
 }
