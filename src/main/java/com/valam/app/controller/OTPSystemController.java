@@ -33,7 +33,7 @@ public class OTPSystemController {
 
     // twilio account sid and auth sid to access the account
     private final static String ACCOUNT_SID = "AC6280b24ba5328f9cc721368ae9e78ae3";
-    private final static String AUTH_ID = "723098423a363af765934844a39211c3";
+    private final static String AUTH_ID = "a143359ea45680d025b25c1caf340628";
     public String mobileNumber;
 
     static {
