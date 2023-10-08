@@ -23,7 +23,7 @@ public class CustCommentService {
 	
 	public CustomerCommentTable saveComment(CustomerCommentTable customerDto) {
 		CustomerCommentTable newComment = new CustomerCommentTable();
-		newComment.setCustomerId(customerDto.getCustomerId());
+		newComment.setUserId(customerDto.getUserId());
 		newComment.setEmpId(customerDto.getEmpId());
 		newComment.setReason(customerDto.getReason());
 		newComment.setRideId(customerDto.getRideId());
@@ -45,7 +45,7 @@ public class CustCommentService {
 	
 	public CustomerCommentTable updateComment(CustomerCommentTable customerDto) {
 		CustomerCommentTable newComment = custCommentRepo.findById(customerDto.getCommentId()).get();
-		newComment.setCustomerId(customerDto.getCustomerId());
+		newComment.setUserId(customerDto.getUserId());
 		newComment.setEmpId(customerDto.getEmpId());
 		newComment.setReason(customerDto.getReason());
 		newComment.setRideId(customerDto.getRideId());

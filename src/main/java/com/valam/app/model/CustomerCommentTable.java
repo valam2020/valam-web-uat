@@ -29,8 +29,8 @@ public class CustomerCommentTable {
 	@Column(name = "empId")
 	private String empId;
 	
-	@Column(name = "customerId")
-	private Long customerId;
+	@Column(name = "userId")
+	private Long userId;
 	
 	@Column(nullable = true,name ="rideId")
 	private Long rideId;
