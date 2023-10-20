@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.valam.app.dto.CustomerLoginDto;
 import com.valam.app.dto.ResponseMessage;
+import com.valam.app.exception.BadRequestException;
 import com.valam.app.model.CustomerLogin;
+import com.valam.app.repo.CustomerLoginRepo;
 import com.valam.app.service.CustomerLoginService;
 import io.swagger.annotations.ApiOperation;
 
@@ -28,6 +30,9 @@ public class CustomerLoginController {
 
 	@Autowired
 	private CustomerLoginService customerloginService;
+	
+	@Autowired
+	private CustomerLoginRepo customerLoginRepo;
 
 	@ApiOperation(value = "api to fetch the all users record")
 	@GetMapping("/all")
@@ -55,8 +60,17 @@ public class CustomerLoginController {
 	
 	@ApiOperation(value = "api to verify existing user by phone number or e-mail")
 	@PostMapping("/login")
-	public CustomerLogin login(@RequestBody CustomerLoginDto customer) {
-		return customerloginService.getByEmailId(customer);
+	public CustomerLoginDto login(@Valid @RequestBody CustomerLoginDto customer) {
+		 if (customerLoginRepo.existsByEmail(customer.getEmail()) == false) {
+	            throw new
+	                    BadRequestException("Not Yet Registered");
+	        }
+		 CustomerLoginDto customerlogin = customerloginService.getByEmailId(customer);
+		 if(customerlogin != null) {
+			 return  customerlogin;
+		 }else {
+			 return null ;
+		 }
 	}
 
 	@ApiOperation(value = "api to change driver password")

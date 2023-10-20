@@ -1,6 +1,6 @@
 package com.valam.app.customObject;
 
-
+import java.time.LocalDate;
 
 public interface DeclinedRideObject {
 
@@ -15,6 +15,7 @@ public interface DeclinedRideObject {
 	Long getDispatcher_id();
 	Long getStatus_id();
 	String getStatus_name();
+	LocalDate getRideDate();
 	
 	
 }

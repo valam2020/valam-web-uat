@@ -22,6 +22,6 @@ public class CustomerLoginDto {
 	private String role_id;
 	private String reason;
 	private String roleCode;
-	
+	private String auth_common_id;
 
 }

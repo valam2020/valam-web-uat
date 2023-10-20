@@ -134,6 +134,19 @@ public class DriverController {
     	}
     	
     }
+    
+    @ApiOperation(value = "api to fetch driver records by given driver id")
+    @GetMapping("/auth/{id}")
+    public Driver findDriversauthById(@RequestHeader(value="common_token") String commonToken,@PathVariable Long id) {
+    	Driver driver = null;
+    	if(capiTokenService.getByTokenId(commonToken).getAuth_common_id()!= null) {
+    		driver = driverService.getDriverByID(id);
+        return driver;
+    	} else {
+    		 return driver;
+    	}
+  	
+    }
 
     @ApiOperation(value = "api to update the driver records by driver")
     @PutMapping("/update")

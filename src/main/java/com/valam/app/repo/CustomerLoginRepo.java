@@ -1,6 +1,6 @@
 package com.valam.app.repo;
 
-import java.util.List;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +12,7 @@ import com.valam.app.model.CustomerLogin;
 @Repository
 public interface CustomerLoginRepo extends JpaRepository<CustomerLogin,Long>{
 	
+	boolean existsByEmail(String email);
 	
 	@Query(nativeQuery = true, value="select * from customer_login where email = :emailId")
 	public CustomerLogin findByEmailId(@Param("emailId") String emailId);

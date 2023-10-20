@@ -1,5 +1,7 @@
 package com.valam.app.dto;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +22,6 @@ public class DeclinedRideObjectDto {
 	private User_DtoObject userObject;
 	private Long sts_id;
 	private String status_name;
+	private LocalDate rideDate;
 
 }

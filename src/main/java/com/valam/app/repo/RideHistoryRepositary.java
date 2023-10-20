@@ -61,7 +61,7 @@ public interface RideHistoryRepositary extends JpaRepository<RideHistory, Serial
     public Ride_History_Object getRideByrideSts_10(@Param("ride_id") long rideId);
     
     
-    @Query(nativeQuery=true,value="Select rd.Ride_id as ride_id,rd.FROM_ADDRESS as fromAddress,rd.TO_ADDRESS as toAddress,rd.message,rd.comfort_level as comfortLevel,rd.user_id,rd.car_id,rd.driver_id,rd.DISPATCHER_ID , rd.sts_id as status_id,rs.status_name as status_name from ride_history rd Inner join ride_status rs on rs.sts_id = rd.sts_id where rd.sts_id = 8 ")
+    @Query(nativeQuery=true,value="Select rd.Ride_id as ride_id,CAST(rd.pickup_date AS DATE) as rideDate,rd.FROM_ADDRESS as fromAddress,rd.TO_ADDRESS as toAddress,rd.message,rd.comfort_level as comfortLevel,rd.user_id,rd.car_id,rd.driver_id,rd.DISPATCHER_ID , rd.sts_id as status_id,rs.status_name as status_name from ride_history rd Inner join ride_status rs on rs.sts_id = rd.sts_id where rd.sts_id = 8 ")
     public List<DeclinedRideObject> findDecinedRides(); // SELECT * FROM RIDE_HISTORY where sts_id = 8
     
         

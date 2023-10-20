@@ -1,5 +1,6 @@
 package com.valam.app.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.valam.app.dto.CustomerLoginDto;
+
+import com.valam.app.model.CommonAPIToken;
 import com.valam.app.model.CustomerLogin;
 import com.valam.app.repo.CustomerLoginRepo;
 
@@ -19,6 +22,9 @@ public class CustomerLoginService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	 private CommonApiTokenService tokenService;
 
 	public List<CustomerLogin> findAll() {
 		return customerLoginRepo.findAll();
@@ -38,7 +44,6 @@ public class CustomerLoginService {
 		customer.setReason(customerDto.getReason());
 		customer.setRole_id(customerDto.getRole_id());
 		customer.setPassword(passwordEncoder.encode(customerDto.getPassword()));
-		
 		return customerLoginRepo.save(customer);
 	}
 
@@ -60,7 +65,6 @@ public class CustomerLoginService {
 			customer.setPhoneNumber(customerDto.getPhoneNumber());
 			customer.setReason(customerDto.getReason());
 			customer.setRole_id(customerDto.getRole_id());
-			
 			return customerLoginRepo.save(customer);
 		} else {
 			return customer = null;
@@ -71,13 +75,28 @@ public class CustomerLoginService {
 		return customerLoginRepo.findByEmailId(customerDto.getAddress());
 	}
 
-	public CustomerLogin getByEmailId(CustomerLoginDto customerDto) {
+	public CustomerLoginDto getByEmailId(CustomerLoginDto customerDto) {
 		CustomerLogin customerLogin = customerLoginRepo.findByEmailId(customerDto.getEmail());
-
+		CustomerLoginDto loginDto = new CustomerLoginDto();
 		boolean isPasswordMatch = passwordEncoder.matches(customerDto.getPassword(), customerLogin.getPassword());
 		System.out.println(isPasswordMatch);
 		if (isPasswordMatch == true) {
-			return customerLogin;
+			CommonAPIToken apiToken = new CommonAPIToken();
+			apiToken.setAuth_common_id("Customer"+"-"+LocalDate.now()+"-"+String.valueOf(((int) (Math.random() * (10000 - 1000))) + 1000));
+        	apiToken.setLoggedin_user_name(customerLogin.getFirstName());
+        	apiToken = tokenService.save(apiToken);
+        	loginDto.setCustomerId(customerLogin.getCustomerId());
+        	loginDto.setAddress(customerLogin.getAddress());
+        	loginDto.setAuth_common_id(apiToken.getAuth_common_id());
+        	loginDto.setEmail(customerLogin.getEmail());
+        	loginDto.setFirstName(customerLogin.getFirstName());
+        	loginDto.setLastName(customerLogin.getLastName());
+        	loginDto.setPhoneNumber(customerLogin.getPhoneNumber());
+        	loginDto.setReason(customerLogin.getReason());
+        	loginDto.setRole_id(customerLogin.getRole_id());
+        	loginDto.setRoleCode(customerLogin.getRole_id());
+        	loginDto.setUserName(customerLogin.getUserName());;
+			return loginDto;
 		} else
 			return null;
 	}

@@ -407,6 +407,7 @@ public class RideHistoryService {
 			delride.setUserObject(userDtoObject);
 			delride.setSts_id(doruser.getStatus_id());
 			delride.setStatus_name(doruser.getStatus_name());
+			delride.setRideDate(doruser.getRideDate());
 			declinerideOb.add(delride);
 		}
 		

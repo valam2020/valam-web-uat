@@ -1,5 +1,7 @@
 package com.valam.app.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,6 +42,12 @@ public class CustomerCommentTable {
 	
 	@Column(name = "usercomments",length=600)
 	private String usercomments;
+	
+	@Column(name = "createdDate")
+	private LocalDate createdDate;
+	
+ 	@Column(name = "modifiedDate")
+	private LocalDate modifiedDate;
 	
 
 }

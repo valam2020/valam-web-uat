@@ -1,5 +1,6 @@
 package com.valam.app.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +29,7 @@ public class CustCommentService {
 		newComment.setReason(customerDto.getReason());
 		newComment.setRideId(customerDto.getRideId());
 		newComment.setUsercomments(customerDto.getUsercomments());
+		newComment.setCreatedDate(LocalDate.now());		
 		return custCommentRepo.save(newComment);
 	}
 
@@ -50,6 +52,7 @@ public class CustCommentService {
 		newComment.setReason(customerDto.getReason());
 		newComment.setRideId(customerDto.getRideId());
 		newComment.setUsercomments(customerDto.getUsercomments());
+		newComment.setModifiedDate(LocalDate.now());
 		return custCommentRepo.save(newComment);
 	}
 	
