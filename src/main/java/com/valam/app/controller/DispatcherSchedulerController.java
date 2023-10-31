@@ -101,7 +101,7 @@ public class DispatcherSchedulerController {
     }
     
     @ApiOperation(value = "api to get dispatcher scheduled records by dispatcher_id and whose endTime not null")
-    @GetMapping("/updateByDispatcher/{id}")
+    @PostMapping("/updateByDispatcher/{id}")
     public ResponseMessage updateByDispatcherId(@PathVariable Long id) {
     	dispSchService.updateEndTimeByDispatcherId(id);
     	ResponseMessage message = new ResponseMessage();

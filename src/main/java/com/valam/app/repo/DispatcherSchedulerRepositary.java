@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -38,7 +40,8 @@ public interface DispatcherSchedulerRepositary extends JpaRepository<DispatcherS
 	List<DispatcherScheduler> getByDetailsDispatcher(@Param("dispId") Long dispatcher_id); 
 	
 	@Modifying
-	@Query(nativeQuery = true, value="UPDATE dispatcher_scheduler SET End_Time = :end_time WHERE dispatcher_id :disp_id and End_Time is null ")
-	void updateEndTime(@Param("end_time") LocalDateTime endTime,@Param("disp_id") Long dispatcher_id);
+	@Transactional
+	@Query(nativeQuery = true, value="UPDATE dispatcher_scheduler SET End_Time = :end_time WHERE dispatcher_id = :disp_id")
+	public void updateEndTime(@Param("end_time") LocalDateTime endTime,@Param("disp_id") Long dispatcher_id);
 	
 }
