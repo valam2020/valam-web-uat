@@ -18,6 +18,7 @@ public interface DispatcherRepositary extends JpaRepository<Dispatcher, Long>{
 	@Query(nativeQuery = true, value="select * from Dispatcher_Details where is_deleted != true and email = :emailId And password = :passcode")
 	Dispatcher findByEmailId(@Param("emailId") String email, @Param("passcode") String password);
 	
+	
 	@Query(nativeQuery = true, value="select * from Dispatcher_Details where is_deleted != true and address = :add")
 	Dispatcher findByAddress(@Param("add") String address);
 	

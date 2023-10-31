@@ -11,17 +11,24 @@ public interface Ride_History_Object {
 	String getPayment_type();
 	LocalDate getDrop_date();
 	String getDriver_name();
+	String getDriver_email();
+	String getDriver_phnum();
 	String getCar_name();
 	String getCar_registered_id();
-	String getImage_url();
 	String getStatus();
 	//String getImageUrl();
-	Long getStatus_id();
+	Long getSts_id();
 	float getDistance();
 	String getComfortLevel();
 	Long setStatus_id();
 	Long SetRide_id();
 	String setStatus();
-
+    String getuser_name();
+    Long getUser_id();
+    Long getDriver_id();
+    Long getDispatcher_id();
+    Long getCar_id();
+    String getEmail();
+    String getuser_phnum();
 	
 }

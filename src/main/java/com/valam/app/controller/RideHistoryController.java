@@ -93,6 +93,19 @@ public class RideHistoryController {
     	return rideHis;
    
     }
+    
+    @ApiOperation(value = "api to fetch the records by given ride id")
+    @GetMapping("/dispatcher/{id}")
+    public List<Ride_History_Object> findRideBydispatcherId(@RequestHeader(value="common_token") String commonToken,@PathVariable Long id) {
+    	List<Ride_History_Object> rideHis = new ArrayList<>();
+    	if(commonTokenService.getByTokenId(commonToken) != null) {
+    		rideHis = rideHisService.getRideByDispatcherID(id);
+    	}else {
+    		rideHis = null;
+    	}
+    	return rideHis;
+   
+    }
 
     @ApiOperation(value = "api to update created ride with dispatcher/driver/car id's")
     @PutMapping("/update")

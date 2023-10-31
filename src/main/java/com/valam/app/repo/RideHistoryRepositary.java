@@ -21,7 +21,9 @@ import com.valam.app.model.RideHistory;
 public interface RideHistoryRepositary extends JpaRepository<RideHistory, Serializable>{  
     
 	//to fetch the records based on ride Dates
-	
+	 @Query(nativeQuery=true,value="Select Ride_ID as ride_id,FROM_ADDRESS as fromAddress,TO_ADDRESS as toAddress,payment_total,payment_type,rd.distance as distance,rd.comfort_level as comfortLevel,CAST( drop_date AS DATE) as drop_date,concat(dd.first_name,dd.last_name) as driver_name,dd.email as driver_email,dd.ph_num as driver_phnum,cd.car_model as car_name,cd.car_register_id as car_registered_id,rs.sts_id as sts_id,rs.status_name as status,rd.driver_id as driver_id,rd.USER_ID as user_id,concat(us.FIRST_NAME,us.MIDDLE_NAME,us.LAST_NAME) as user_name,us.EMAIL as email,us.PH_NUM as user_phnum,rd.car_id as car_id,rd.DISPATCHER_ID as dispatcher_id from ride_history rd Inner Join user_details us on us.USER_ID = rd.USER_ID Inner Join driver_details dd on dd.driver_id = rd.DRIVER_ID Inner Join car_details cd on cd.car_id =rd.CAR_ID Inner join ride_status rs on rs.sts_id = rd.sts_id and\r\n"
+	 		+ " rd.DISPATCHER_ID = :dispatcherId")
+	 public List<Ride_History_Object> getRideBydispatcherId(@Param("dispatcherId") long dispatcherId);
          
 	// to fetch records by given start date,end date/driver id/dispatcher id/car id
     @Query(nativeQuery = true, value="select * FROM RIDE_HISTORY where DATE(pickup_date) >= DATE(IFNull(:pickUpDate, pickup_date)) AND  DATE(IFNULL(drop_date,CURDATE()))  <= DATE(IFNULL(:dropDate,CURDATE())) AND IFNULL(DRIVER_ID,0) = IFNULL(:dId, DRIVER_ID)\r\n"

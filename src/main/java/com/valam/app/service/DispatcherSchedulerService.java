@@ -1,6 +1,7 @@
 package com.valam.app.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -119,6 +120,18 @@ public class DispatcherSchedulerService {
     public List<DispatcherScheduler> getByEndTime(Long dispatcher_id){
     	return dispSchRepo.getByDetailsDispatcher(dispatcher_id);
     } 
+    
+    public void updateEndTimeByDispatcherId(Long dispatcher_id) {
+    	List<DispatcherScheduler> dispatcherSche = dispSchRepo.getByDetailsDispatcher(dispatcher_id);
+        for(DispatcherScheduler dissch:dispatcherSche) {
+        	if(dissch.getEndTime() == null) {
+        		LocalDateTime time = LocalDateTime.now();
+            	dispSchRepo.updateEndTime(time, dispatcher_id);
+            	driverRepo.updateByStatusbydriver((long) 2,dissch.getDriver().getId());
+            	carRepo.updateDriverAssigned(dissch.getCarDetails().getCarId());
+        	}
+        }
+    }
     
     
     

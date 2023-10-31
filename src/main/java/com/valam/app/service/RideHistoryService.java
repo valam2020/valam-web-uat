@@ -85,6 +85,14 @@ public class RideHistoryService {
 		
 	   return rideHis;
 	}
+	
+	
+	public List<Ride_History_Object> getRideByDispatcherID(Long id) {
+
+		List<Ride_History_Object> rideHis = rideHisRepo.getRideBydispatcherId(id);
+		
+	   return rideHis;
+	}
 
 	// to save the ride record with user and ride status
 	public RideHistory add(RideHistoryDto udridesDto) {
@@ -341,7 +349,7 @@ public class RideHistoryService {
 		Ride_History_Object ride;
 		ResponseMessage message = new ResponseMessage();
 		ride = rideHisRepo.getRideByrideSts_15(ride_id);
-		if (ride != null && ride.getStatus_id().longValue() == CommonConstants.Fifteen) {
+		if (ride != null && ride.getSts_id().longValue() == CommonConstants.Fifteen) {
 			message.setHttpStatus(200);
 			message.setMessage(ride.getStatus());
 			return message;
@@ -357,7 +365,7 @@ public class RideHistoryService {
 		Ride_History_Object ride;
 		ResponseMessage message = new ResponseMessage();
 		ride = rideHisRepo.getRideByrideSts_10(ride_id);
-		if (ride != null && ride.getStatus_id().longValue() == CommonConstants.Ten) {
+		if (ride != null && ride.getSts_id().longValue() == CommonConstants.Ten) {
 			message.setHttpStatus(200);
 			message.setMessage(ride.getStatus());
 			return message;

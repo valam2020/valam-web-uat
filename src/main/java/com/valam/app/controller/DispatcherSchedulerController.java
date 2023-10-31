@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.valam.app.dto.DispSchDto;
+import com.valam.app.dto.ResponseMessage;
 import com.valam.app.model.DispatcherScheduler;
 import com.valam.app.service.CommonApiTokenService;
 import com.valam.app.service.DispatcherSchedulerService;
@@ -97,6 +98,16 @@ public class DispatcherSchedulerController {
     		return disshec;
     	}
          return disshec;
+    }
+    
+    @ApiOperation(value = "api to get dispatcher scheduled records by dispatcher_id and whose endTime not null")
+    @GetMapping("/updateByDispatcher/{id}")
+    public ResponseMessage updateByDispatcherId(@PathVariable Long id) {
+    	dispSchService.updateEndTimeByDispatcherId(id);
+    	ResponseMessage message = new ResponseMessage();
+    	message.setHttpStatus(200);
+    	message.setMessage("Updated Successfully");
+    	return message;
     }
     
 
