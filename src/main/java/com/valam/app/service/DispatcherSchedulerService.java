@@ -2,8 +2,9 @@ package com.valam.app.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
-import java.time.*;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -129,7 +130,7 @@ public class DispatcherSchedulerService {
         		LocalDateTime time = LocalDateTime.now(zid);
             	dispSchRepo.updateEndTime(time, dispatcher_id);
             	driverRepo.updateByStatusbydriver((long) 2,dissch.getDriver().getId());
-            	carRepo.updateDriverAssigned(dissch.getCarDetails().getCarId());
+            	carRepo.updateDriverASFalse(dissch.getCarDetails().getCarId());
         	}
         }
     }

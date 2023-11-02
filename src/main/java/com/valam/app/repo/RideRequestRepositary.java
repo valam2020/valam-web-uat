@@ -42,9 +42,7 @@ public interface RideRequestRepositary extends JpaRepository<RideRequest, Long>{
 	@Transactional
 	@Query(nativeQuery = true,value="UPDATE Ride_Request SET STS_ID = 3 WHERE ride_loc_id = :rideId")
 	void updateByRideLocId(@Param("rideId") long ride_id); 
-	
-	
-	
+
 	
 	@Modifying
 	@Transactional
@@ -59,6 +57,8 @@ public interface RideRequestRepositary extends JpaRepository<RideRequest, Long>{
     
 	@Query(nativeQuery = true,value="SELECT * FROM ride_request where ride_id = :rideId and sts_id = 4")
 	RideRequest isAlreadyRequestedOrNot(@Param("rideId") Long ride_id);
-
+	
+	@Query(nativeQuery = true,value="SELECT * FROM ride_request where sts_id = 8")
+	List<RideRequest> getdeclinedRidesbydisp();
 	
 	}

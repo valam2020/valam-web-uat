@@ -243,6 +243,19 @@ public class RideRequestService {
 		return rideReqRepo.findAllByDispatcherId(dispatcher_id);
 	}
 	
+	public List<RideRequest> getDeclinedByDispatcherId(Long dispatcher_id){
+		
+		List<RideRequest> rideData = rideReqRepo.getdeclinedRidesbydisp();
+		List<RideRequest> declinedRides = new ArrayList<>();
+		for(RideRequest req:rideData) {
+			if(req.getDispatcher() != null && dispatcher_id.equals(req.getDispatcher().getId())) {
+				declinedRides.add(req);
+			}
+		}
+		return declinedRides;
+	}
+	
+	
 	public void updateNotSelectedRideStatus(Long rideId) {
 		List<RideRequest_Dto> requests = rideReqRepo.findByRideId(rideId);
 	    //System.out.println(requests);

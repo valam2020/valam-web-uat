@@ -45,6 +45,14 @@ public class RideRequestController {
     	}
         return ridereq;
     }
+    
+    
+    @ApiOperation(value = "api to fetch the Declined rides by Dispatcher_id")
+    @GetMapping("/dispatcher/{id}")
+    public List<RideRequest> findDeclinedByDispId(@PathVariable Long id) {
+    	
+    	return rideRequestService.getDeclinedByDispatcherId(id);
+    }
 
     @ApiOperation(value = "api to fetch the records based on ride_status(like: Ride Request,Accepted Etc)")
     @PostMapping("/fetch")

@@ -72,7 +72,7 @@ public interface DriverRepositary extends JpaRepository<Driver, Long>{
 	
 	@Modifying
 	@Transactional
-	@Query(nativeQuery = true, value="Update Driver_Details SET driver_status = 'no_ride', sts_id =:stsId where Driver_ID = :id")
+	@Query(nativeQuery = true, value="Update Driver_Details SET driver_status = 'no_ride',is_car_assigned = false, sts_id =:stsId where Driver_ID = :id")
     public void updateByStatusbydriver(@Param("stsId") Long sts_id,@Param("id") Long id);
 	
 	@Query(nativeQuery = true, value="select * from Driver_Details where sts_id !=11")
