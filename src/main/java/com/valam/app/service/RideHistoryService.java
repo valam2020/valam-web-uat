@@ -236,7 +236,11 @@ public class RideHistoryService {
 		uride1.setDriver(dd);
 		uride1.setDispatcher(dispatcher);
 		uride1.setCarDetails(car);
-		uride1.setRideStatus(rideSts);
+		if(rideSts.getStsId()== CommonConstants.Eight) {
+			uride1.setRideStatus(uride1.getRideStatus());
+		}else {
+			uride1.setRideStatus(rideSts);
+		}
 		uride1.setPaymentTotal(uride1.getPaymentTotal());
 		uride1.setPaymentType(uride1.getPaymentType());
 		uride1.setDistance(uride1.getDistance());
