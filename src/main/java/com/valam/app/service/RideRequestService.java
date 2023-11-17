@@ -160,7 +160,8 @@ public class RideRequestService {
 	 			if(rideby !=null && rideby.getDriverId() !=null) {
 	 				driver = driverRepo.findById(rideby.getDriverId()).get();
 	 				  CarDetails car = null;
-	 			        Long car_id = dispatcherSchRepo.findbyDriverId(driver.getId(),dispatcher.getId()).getCar_id();
+	 				 Long car_id = driver.getCarId() ;	 				 
+	 					// Long car_id = dispatcherSchRepo.findbyDriverId(driver.getId(),dispatcher.getId()).getCar_id();
 	 			        //System.out.println(car_id);
 	 			        if(car_id != null && driver.getDriver_status() != "ride_queue") {
 	 			        	car = carRepo.findById(car_id).get();

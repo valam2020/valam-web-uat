@@ -38,6 +38,9 @@ public interface DispatcherSchedulerRepositary extends JpaRepository<DispatcherS
 	@Query(nativeQuery = true,value="Select * from dispatcher_scheduler where dispatcher_id = :dispId and End_Time is null")
 	List<DispatcherScheduler> getByDetailsDispatcher(@Param("dispId") Long dispatcher_id); 
 	
+	@Query(nativeQuery = true,value="Select * from dispatcher_scheduler where dispatcher_id = :dispId and driver_id = IFNULL(:driverId, driver_id) and End_Time is null")
+	List<DispatcherScheduler> getByDetailsDispatcherandDriver(@Param("dispId") Long dispatcher_id,@Param("driverId") Long dId); 
+	
 	@Modifying
 	@Transactional
 	@Query(nativeQuery = true, value="UPDATE dispatcher_scheduler SET End_Time = :end_time WHERE dispatcher_id = :disp_id")

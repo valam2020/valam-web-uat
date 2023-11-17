@@ -8,8 +8,6 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
-import io.swagger.annotations.ApiOperation;
-
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,23 +30,19 @@ import com.valam.app.dto.DriverDtoModel2;
 import com.valam.app.dto.EmailDetails;
 import com.valam.app.dto.ResponseMessage;
 import com.valam.app.exception.BadRequestException;
-import com.valam.app.model.CarDetails;
 import com.valam.app.model.CommonAPIToken;
-import com.valam.app.model.DispatcherScheduler;
 import com.valam.app.model.Driver;
-import com.valam.app.model.DriverLogin;
 import com.valam.app.model.RideStatus;
 import com.valam.app.repo.CarRepositary;
-import com.valam.app.repo.DispatcherSchedulerRepositary;
 import com.valam.app.repo.DriverRepositary;
-import com.valam.app.service.CarService;
 import com.valam.app.service.CommonApiTokenService;
-import com.valam.app.service.DispatcherSchedulerService;
 import com.valam.app.service.DriverLoginService;
 import com.valam.app.service.DriverService;
 import com.valam.app.service.EmailService;
 import com.valam.app.service.JWTTokenCreator;
 import com.valam.app.service.StatusService;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin(origins = "*")

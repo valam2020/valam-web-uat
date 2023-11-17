@@ -272,7 +272,7 @@ public class DriverService {
 	
 	public void updateCarAssignedStatus(Long carId,String car_no,Long id) {
 		driverrepo.updateCarAssigned(carId,car_no,id);
-		return ;
+		
 	}
 	
 	public Optional<Driver> updateLatLngDriver(Driver driver) {

@@ -190,7 +190,7 @@ public class RideHistoryService {
 
 		RideStatus rideSts = null;
 		if (rideHis != null && rideHis.getStsId() != null) {
-			rideSts = stsRepo.findById(rideHis.getStsId()).get();
+			rideSts = stsRepo.findById(rideHis.getStsId()).get(); 
 			rideSts.setStsId(rideSts.getStsId());
 		}
 
@@ -241,6 +241,7 @@ public class RideHistoryService {
 		}else {
 			uride1.setRideStatus(rideSts);
 		}
+		
 		uride1.setPaymentTotal(uride1.getPaymentTotal());
 		uride1.setPaymentType(uride1.getPaymentType());
 		uride1.setDistance(uride1.getDistance());
@@ -353,7 +354,8 @@ public class RideHistoryService {
 		Ride_History_Object ride;
 		ResponseMessage message = new ResponseMessage();
 		ride = rideHisRepo.getRideByrideSts_15(ride_id);
-		if (ride != null && ride.getSts_id().longValue() == CommonConstants.Fifteen) {
+		//System.out.println(ride.getSts_id());
+		if (ride != null &&  ride.getSts_id() !=  null  && ride.getSts_id().longValue() == CommonConstants.Fifteen) {
 			message.setHttpStatus(200);
 			message.setMessage(ride.getStatus());
 			return message;
@@ -369,7 +371,7 @@ public class RideHistoryService {
 		Ride_History_Object ride;
 		ResponseMessage message = new ResponseMessage();
 		ride = rideHisRepo.getRideByrideSts_10(ride_id);
-		if (ride != null && ride.getSts_id().longValue() == CommonConstants.Ten) {
+		if (ride != null && ride.getSts_id()  != null && ride.getSts_id().longValue() == CommonConstants.Ten) {
 			message.setHttpStatus(200);
 			message.setMessage(ride.getStatus());
 			return message;

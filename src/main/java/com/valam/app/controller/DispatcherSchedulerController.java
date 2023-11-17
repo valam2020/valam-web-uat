@@ -81,12 +81,15 @@ public class DispatcherSchedulerController {
     public List<DispatcherScheduler> findByDataBetweenAndDidCid(@RequestHeader(value="common_token") String commonToken,@RequestBody DispSchDto dispSchDto) {
     	List<DispatcherScheduler> disshec= new ArrayList<DispatcherScheduler>();
     	if(commonTokenService.getByTokenId(commonToken) != null) {
-    		disshec = dispSchService.getDateBetweenandDidandCid(dispSchDto);
+    		
+    		disshec = dispSchService.getByEndTimeWithDispatcher(dispSchDto);
+    		return disshec;
     	}else {
     		return disshec;
     	}
-    	return disshec;
-    }
+    		
+	
+    	}
     
     @ApiOperation(value = "api to get dispatcher scheduled records by dispatcher_id and whose endTime not null")
     @GetMapping("/fetchByDispatcher/{id}")

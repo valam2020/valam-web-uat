@@ -107,7 +107,7 @@ public class DispatcherSchedulerService {
     	       driverRepo.updateCarAssignedFalse(driverId);
     	       carRepo.updateDriverASFalse(car_Id);
     	       DispatcherScheduler scheduler = dispSchRepo.save(dispatcherScheduler);
-    	       return dispSchRepo.findById(scheduler.getSchedulerId()).get();
+    	       return scheduler;
     		}else
     			return dispSchRepo.save(dispatcherScheduler);    		
     }
@@ -117,6 +117,10 @@ public class DispatcherSchedulerService {
     	dipschDto.setBeginDate(LocalDate.now());
            return dispSchRepo.findByDateBetweenandDidandCid(dipschDto.getBeginDate(),dipschDto.getEndDate(),dipschDto.getDriverId(),dipschDto.getCarId(),dipschDto.getDispatcherId());
     }
+    
+    public List<DispatcherScheduler> getByEndTimeWithDispatcher(DispSchDto dipschDto){
+    	return dispSchRepo.getByDetailsDispatcherandDriver(dipschDto.getDispatcherId(),dipschDto.getDriverId());
+    } 
     
     public List<DispatcherScheduler> getByEndTime(Long dispatcher_id){
     	return dispSchRepo.getByDetailsDispatcher(dispatcher_id);

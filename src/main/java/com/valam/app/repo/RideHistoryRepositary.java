@@ -56,10 +56,10 @@ public interface RideHistoryRepositary extends JpaRepository<RideHistory, Serial
     @Query(nativeQuery=true,value= "Select Ride_ID as ride_id,FROM_ADDRESS as fromAddress,TO_ADDRESS as toAddress,payment_total,payment_type,rd.distance as distance,rd.comfort_level as comfortLevel,CAST( drop_date AS DATE) as drop_date,concat(dd.first_name,dd.last_name) as driver_name,cd.car_model as car_name,cd.car_register_id as car_registered_id,dd.image_url as Image_url,rs.status_name as status from ride_history rd Inner Join driver_details dd on dd.driver_id = rd.DRIVER_ID Inner Join car_details cd on cd.car_id =rd.CAR_ID Inner join ride_status rs on rs.sts_id = rd.sts_id and rd.sts_id In (4,10) and rd.USER_ID = ifnull(:userId,rd.USER_ID) and rd.DRIVER_ID = ifnull(:driverId,rd.Driver_id) order by RIDE_ID DESC")
     public List<Ride_History_Object> rideTrips(@Param("userId") Long user_id,@Param("driverId") Long driver_id);
     
-    @Query(nativeQuery=true,value="SELECT ride_id as ride_id,rs.sts_id as status_id,rs.status_name as status FROM ride_history rh Join ride_status rs on rs.sts_id = rh.sts_id where rh.sts_id = 15 and rh.RIDE_ID = :ride_id")
+    @Query(nativeQuery=true,value="SELECT ride_id as ride_id,rs.sts_id as sts_id,rs.status_name as status FROM ride_history rh Join ride_status rs on rs.sts_id = rh.sts_id where rh.sts_id = 15 and rh.RIDE_ID = :ride_id")
     public Ride_History_Object getRideByrideSts_15(@Param("ride_id") long rideId);
     
-    @Query(nativeQuery=true,value="SELECT ride_id as ride_id,rs.sts_id as status_id,rs.status_name as status FROM ride_history rh Join ride_status rs on rs.sts_id = rh.sts_id where rh.sts_id = 10 and rh.RIDE_ID = :ride_id")
+    @Query(nativeQuery=true,value="SELECT ride_id as ride_id,rs.sts_id as sts_id,rs.status_name as status FROM ride_history rh Join ride_status rs on rs.sts_id = rh.sts_id where rh.sts_id = 10 and rh.RIDE_ID = :ride_id")
     public Ride_History_Object getRideByrideSts_10(@Param("ride_id") long rideId);
     
     
