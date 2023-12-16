@@ -1,6 +1,7 @@
 package com.valam.app.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +24,7 @@ public class AddDispatcherDto {
 	private BigDecimal longitude;
 	private String imageUrl;
 	private String pincode;
+	private LocalDate acceptedDate;
+	private Boolean isAccepted;
 
 }

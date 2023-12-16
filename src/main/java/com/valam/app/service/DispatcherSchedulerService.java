@@ -3,6 +3,7 @@ package com.valam.app.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -68,8 +69,6 @@ public class DispatcherSchedulerService {
 		CarDetails carData = carService.getCarByID(carId);
 		driverService.updateCarAssignedStatus(carData.getCarId(),carData.getCarRegisterId(),driverId);
 		return dispSchRepo.save(dispatcherScheduler);
-		
-		
 	}
 
 	//to fetch all Dispatcher Schedulers
@@ -119,7 +118,17 @@ public class DispatcherSchedulerService {
     }
     
     public List<DispatcherScheduler> getByEndTimeWithDispatcher(DispSchDto dipschDto){
-    	return dispSchRepo.getByDetailsDispatcherandDriver(dipschDto.getDispatcherId(),dipschDto.getDriverId());
+    	List<DispatcherScheduler> disList = new ArrayList<>();
+    	if(dipschDto.getBeginDate() == null) {
+    		dipschDto.setBeginDate(LocalDate.now());
+    		disList = dispSchRepo.findByDateBetweenandDidandCid(dipschDto.getBeginDate(),dipschDto.getEndDate(),dipschDto.getDriverId(),dipschDto.getCarId(),dipschDto.getDispatcherId());
+    		return disList;
+    	}else {
+    		disList  = dispSchRepo.getByDetailsDispatcherandDriver(dipschDto.getDriverId(),dipschDto.getDispatcherId());
+    		return disList;
+    	}
+    	
+    	
     } 
     
     public List<DispatcherScheduler> getByEndTime(Long dispatcher_id){

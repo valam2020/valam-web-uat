@@ -42,6 +42,7 @@ public class UserService {
 	     user.setPhNum(signUpRequest.getPhNum());
 	     user.setLatitude(signUpRequest.getLatitude());
 	     user.setLongitude(signUpRequest.getLongitude());
+	     user.setIsAccepted(signUpRequest.getIsAccepted());
 	     user.setPassword(passwordEncoder.encode(user.getPassword()));
 	     String token = jwtCreator.getJWTToken(signUpRequest.getEmail());
 	     user.setToken(token);

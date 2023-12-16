@@ -64,6 +64,12 @@ public class Dispatcher {
 	@Column(nullable=true)
 	private String imageUrl;
 	
+	@Column(nullable = true,name = "isAccepted")
+	private Boolean isAccepted;
+	
+	@Column(name = "acceptedDate")
+	private LocalDate acceptedDate;
+	
 	@Column(name = "createdDate")
 	private LocalDate createdDate;
 	

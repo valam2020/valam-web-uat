@@ -42,7 +42,7 @@ public class DriverDto {
 	private String auth_common_id;
 	private String dlfrontimage;
 	private String dlbackImage;
-
+    private Boolean isAccepted;
 	/*DTO, which stands for Data Transfer Object, 
 	is a design pattern conceived to reduce the number of calls when working with remote interfaces.the main reason 
 	for using a Data Transfer Object is to batch up what would be multiple remote calls into a single one.*/

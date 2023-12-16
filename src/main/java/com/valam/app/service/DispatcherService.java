@@ -75,7 +75,9 @@ public class DispatcherService {
 		dispatcher.setLatitude(dispatcherDto.getLatitude());
 		dispatcher.setLongitude(dispatcherDto.getLongitude());
 		dispatcher.setPincode(dispatcherDto.getPincode());
-		dispatcher.setImageUrl(dispatcher.getImageUrl());
+		dispatcher.setImageUrl(dispatcherDto.getImageUrl());
+		dispatcher.setAcceptedDate(dispatcherDto.getAcceptedDate());
+		dispatcher.setIsAccepted(dispatcherDto.getIsAccepted());
 		dispatcher.setDeleted(false);
 		dispatcher.setPassword(passwordEncoder.encode(dispatcherDto.getPassword()));
 		return dispatcherRepo.save(dispatcher);
@@ -173,6 +175,16 @@ public class DispatcherService {
     		dispatcher.setImageUrl(disp.getImageUrl());
     	}else {
     		dispatcher.setImageUrl(dispatcher.getImageUrl());
+    	}
+    	if(disp.getIsAccepted() !=null) {
+    		dispatcher.setIsAccepted(disp.getIsAccepted());
+    	}else {
+    		dispatcher.setIsAccepted(dispatcher.getIsAccepted());
+    	}
+    	if(disp.getAcceptedDate() !=null) {
+    		dispatcher.setAcceptedDate(disp.getAcceptedDate());
+    	}else {
+    		dispatcher.setAcceptedDate(dispatcher.getAcceptedDate());
     	}
     	dispatcher.setModifiedDate(LocalDate.now());
     	dispatcher.setDeleted(false);

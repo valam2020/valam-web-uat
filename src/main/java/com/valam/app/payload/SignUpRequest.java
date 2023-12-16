@@ -19,7 +19,7 @@ public class SignUpRequest {
 	private  String firstName;
 	private  String lastName;
 	private  String middleName;
-	
+	private  Boolean isAccepted;
 	private  String email;
 	private  String password;
 	private  String phNum;

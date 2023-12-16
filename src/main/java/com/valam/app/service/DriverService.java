@@ -81,7 +81,8 @@ public class DriverService {
 		driverd.setPassword(passwordEncoder.encode(driver.getPassword()));
 		driverd.setDlbackimage(driver.getDlbackImage());
 		driverd.setDlfrontimage(driver.getDlfrontimage());
-		driverd.setToken(driver.getToken());		
+		driverd.setToken(driver.getToken());
+		driverd.setIsAccepted(driver.getIsAccepted());
 		return driverrepo.save(driverd);
 	}
     
@@ -203,6 +204,11 @@ public class DriverService {
 			existingDriver.setDateOfBirth(existingDriver.getDateOfBirth());
 		}else {
 			existingDriver.setDateOfBirth(driver.getDateOfBirth());
+		}
+		if(driver.getIsAccepted() == null) {
+			existingDriver.setIsAccepted(existingDriver.getIsAccepted());
+		}else {
+			existingDriver.setIsAccepted(driver.getIsAccepted());
 		}
 		existingDriver.setCarNo(existingDriver.getCarNo());
 		existingDriver.set_car_assigned(existingDriver.is_car_assigned());

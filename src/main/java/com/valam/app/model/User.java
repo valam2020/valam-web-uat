@@ -62,6 +62,9 @@ public class User {
 	@Column(name="token",nullable=true,length = 500)
 	private String token;
 	
+	@Column(nullable = true,name = "isAccepted")
+	private Boolean isAccepted;
+	
 	@Enumerated
 	private AuthProvider provider;
 	

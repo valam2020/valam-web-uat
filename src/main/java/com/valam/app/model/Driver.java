@@ -85,6 +85,9 @@ public class Driver {
 	@Column(name="token",nullable=true,length=500)
 	private String token;
 	
+	@Column(nullable = true,name = "isAccepted")
+	private Boolean isAccepted;
+	
 	@JsonIgnore
 	@Column(nullable=true,name="password")
 	private String password;
