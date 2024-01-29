@@ -26,5 +26,7 @@ public class AddDispatcherDto {
 	private String pincode;
 	private LocalDate acceptedDate;
 	private Boolean isAccepted;
+	private Boolean privacypolicy;
+	private LocalDate privacypolicyDate;
 
 }

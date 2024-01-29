@@ -70,6 +70,12 @@ public class Dispatcher {
 	@Column(name = "acceptedDate")
 	private LocalDate acceptedDate;
 	
+	@Column(nullable = true,name="privacypolicy")
+	private Boolean privacypolicy;
+	
+	@Column(name = "privacypolicyDate")
+	private LocalDate privacypolicyDate;
+	
 	@Column(name = "createdDate")
 	private LocalDate createdDate;
 	

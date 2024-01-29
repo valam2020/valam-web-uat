@@ -32,5 +32,9 @@ public class DispatcherDto {
 	private String auth_common_id;
 	private Long StsId; 
 	private String message;
+	private LocalDate acceptedDate;
+	private Boolean isAccepted;
+	private Boolean privacypolicy;
+	private LocalDate privacypolicyDate;
 	
 }

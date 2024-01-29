@@ -78,6 +78,8 @@ public class DispatcherService {
 		dispatcher.setImageUrl(dispatcherDto.getImageUrl());
 		dispatcher.setAcceptedDate(dispatcherDto.getAcceptedDate());
 		dispatcher.setIsAccepted(dispatcherDto.getIsAccepted());
+		dispatcher.setPrivacypolicy(dispatcherDto.getPrivacypolicy());
+		dispatcher.setPrivacypolicyDate(dispatcherDto.getPrivacypolicyDate());
 		dispatcher.setDeleted(false);
 		dispatcher.setPassword(passwordEncoder.encode(dispatcherDto.getPassword()));
 		return dispatcherRepo.save(dispatcher);
@@ -113,6 +115,10 @@ public class DispatcherService {
         	dispatcherDto.setPhNum(disptcr.getPhNum());
         	dispatcherDto.setPincode(disptcr.getPincode());
         	dispatcherDto.setToken(token);
+        	dispatcherDto.setAcceptedDate(disptcr.getAcceptedDate());
+        	dispatcherDto.setIsAccepted(disptcr.getIsAccepted());
+        	dispatcherDto.setPrivacypolicy(disptcr.getPrivacypolicy());
+        	dispatcherDto.setPrivacypolicyDate(disptcr.getPrivacypolicyDate());
         	return dispatcherDto;
         }
         else 
@@ -186,6 +192,17 @@ public class DispatcherService {
     	}else {
     		dispatcher.setAcceptedDate(dispatcher.getAcceptedDate());
     	}
+    	if(disp.getPrivacypolicyDate() !=null) {
+    		dispatcher.setPrivacypolicyDate(disp.getPrivacypolicyDate());
+    	}else {
+    		dispatcher.setPrivacypolicyDate(dispatcher.getPrivacypolicyDate());
+    	}
+    	if(disp.getPrivacypolicy() !=null) {
+    		dispatcher.setPrivacypolicy(disp.getPrivacypolicy());
+    	}else {
+    		dispatcher.setPrivacypolicy(dispatcher.getPrivacypolicy());
+    	}
+    	
     	dispatcher.setModifiedDate(LocalDate.now());
     	dispatcher.setDeleted(false);
     	return dispatcherRepo.save(dispatcher);
