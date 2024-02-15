@@ -108,12 +108,13 @@ public class CarController {
     public ResponseMessage deleteCar(@RequestHeader(value="common_token") String commonToken,@RequestBody CarDto car) {
     	 ResponseMessage message = new ResponseMessage();
     	if(commonTokenService.getByTokenId(commonToken) != null) {
+    		boolean iscarassigned = carService.getCarByID(car.getCarId()).is_driver_assigned();
     		RideHistory_Dto rideDto = new RideHistory_Dto();
     		rideDto.setCarId(car.getCarId());
     		rideDto.setPickupDate(LocalDate.now());
     		rideDto.setStatusId((long) 15);
     		List<RideHistory> ride = rideHisrepo.findByDateBetween(rideDto.getPickupDate(),null,null,null,null,rideDto.getStatusId(),rideDto.getCarId());
-    		if(ride != null) {
+    		if(iscarassigned && ride != null) {
     			carService.deleteCar(car.getCarId());
     			message.setHttpStatus(201);
     	        message.setMessage("Successfully Deleted"+car.getCarId());
